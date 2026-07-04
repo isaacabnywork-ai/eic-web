@@ -49,7 +49,7 @@ export function HeroCarousel({ items }: { items: ContentItem[] }) {
           
           <div className="absolute bottom-8 md:bottom-12 left-0 p-6 md:p-12 w-full md:w-2/3">
             <span className="uppercase tracking-widest text-xs font-bold text-accent mb-2 block">
-              {item.type === 'sermon' ? 'New Sermon' : item.type}
+              {item.type === 'sermon_podcast' ? 'New Sermon' : item.type.replace('_', ' ').toUpperCase()}
             </span>
             <h2 className="font-serif text-3xl md:text-5xl font-bold text-white mb-4 leading-tight">
               {item.title}

@@ -53,7 +53,7 @@ export default function LibraryPage() {
             <ContentCard 
               key={item.id} 
               item={item} 
-              aspectRatio={item.type === 'article' ? 'portrait' : 'square'} 
+              aspectRatio={item.type === 'blog_series' || item.type === 'book_review' ? 'portrait' : item.type === 'sermon_podcast' ? 'video' : 'square'} 
               className="w-full"
             />
           ))}
