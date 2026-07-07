@@ -23,7 +23,7 @@ export function EventCard({ item }: { item: ContentItem }) {
   };
 
   return (
-    <Link href={item.url} className="group block w-full flex-shrink-0 snap-start h-full">
+    <Link href={`/events/${item.id}`} className="group block w-full flex-shrink-0 snap-start h-full">
       <div className="bg-bg-elevated border border-border-main rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col h-full">
         
         {/* Date Banner */}
