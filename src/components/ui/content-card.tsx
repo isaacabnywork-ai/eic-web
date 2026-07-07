@@ -21,6 +21,8 @@ export type ContentItem = {
   tag?: string;
   topic?: string;
   series?: string;
+  date?: string;
+  color?: string;
 };
 
 export function ContentCard({ item, aspectRatio = 'video', className = 'flex-shrink-0 w-48 md:w-64 snap-start' }: { item: ContentItem; aspectRatio?: 'video' | 'square' | 'portrait', className?: string }) {

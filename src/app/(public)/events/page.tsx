@@ -1,5 +1,5 @@
 import { getAllContent } from "@/lib/db";
-import { ContentCard } from "@/components/ui/content-card";
+import { EventCard } from "@/components/ui/event-card";
 
 export default async function EventsPage() {
   const events = await getAllContent('event');
@@ -10,13 +10,11 @@ export default async function EventsPage() {
         <h1 className="font-serif font-bold tracking-tight text-4xl md:text-5xl lg:text-7xl text-text-main mb-6 leading-tight">Events</h1>
       </div>
 
-      <div className="flex flex-wrap gap-4 md:gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8">
         {events.map((event) => (
-          <ContentCard 
-            key={event.id} 
-            item={event} 
-            aspectRatio="square"
-          />
+          <div key={event.id} className="w-full max-w-full">
+            <EventCard item={event} />
+          </div>
         ))}
       </div>
       
