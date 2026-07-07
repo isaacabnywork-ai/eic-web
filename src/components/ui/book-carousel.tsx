@@ -125,40 +125,50 @@ export function BookCarousel({ items }: BookCarouselProps) {
           </h2>
         </div>
 
-        {/* ══════════════════ DESKTOP CAROUSEL ══════════════════ */}
+        {/* ══════════════════ DESKTOP CAROUSEL (INFINITE LOOP) ══════════════════ */}
         <div
-          className="hidden md:flex w-full py-12 cursor-grab active:cursor-grabbing px-4 md:px-8 overflow-visible"
+          className="hidden md:flex relative w-full py-12 cursor-grab active:cursor-grabbing justify-center overflow-visible"
           style={{ height: "580px", alignItems: "center" }}
           onMouseDown={(e) => onPointerDown(e.clientX)}
           onMouseMove={(e) => onPointerMove(e.clientX)}
           onMouseUp={(e) => onPointerUp(e.clientX)}
           onMouseLeave={(e) => { if (dragStartX.current !== null) onPointerUp(e.clientX); }}
         >
-          <div
-            className="flex items-center transition-transform duration-500 ease-out"
-            style={{
-              gap: `${CARD_GAP}px`,
-              transform: `translateX(-${activeIndex * (CARD_W + CARD_GAP)}px)`,
-            }}
-          >
+          <div className="relative w-[300px] h-[480px]">
             {items.map((item, idx) => {
-              const isActive = idx === activeIndex;
+              // Calculate wrapping diff so the stack feels infinite
+              let diff = idx - activeIndex;
+              if (items.length > 2) {
+                if (diff > items.length / 2) diff -= items.length;
+                if (diff < -items.length / 2) diff += items.length;
+              }
+
+              const absDiff = Math.abs(diff);
+              // Hide items that are too far away
+              if (absDiff > 3) return null;
+
               const theme = cardThemes[idx % cardThemes.length];
-              const dist = Math.abs(idx - activeIndex);
+              const isActive = diff === 0;
+
+              // Calculate positions (CARD_W + CARD_GAP = 324)
+              const translateX = diff * 324;
+              const scale = isActive ? 1.05 : 0.95;
+              const opacity = absDiff === 0 ? 1 : absDiff === 1 ? 0.6 : 0.3;
+              const zIndex = 30 - absDiff;
 
               return (
                 <div
                   key={item.id}
                   onClick={() => { if (!didDrag.current) setActiveIndex(idx); }}
-                  className="flex-shrink-0 rounded-3xl transition-all duration-500 ease-out overflow-hidden flex flex-col"
+                  className="absolute inset-0 rounded-3xl overflow-hidden flex flex-col transition-all duration-500 ease-out"
                   style={{
-                    width: `${CARD_W}px`,
-                    height: isActive ? "480px" : "400px",
                     backgroundColor: theme.bg,
-                    opacity: dist === 0 ? 1 : dist === 1 ? 0.6 : 0.3,
-                    transform: isActive ? "scale(1.05)" : "scale(0.95)",
+                    zIndex,
+                    transform: `translateX(${translateX}px) scale(${scale})`,
+                    opacity,
                     boxShadow: isActive ? "0 24px 48px rgba(0,0,0,0.25)" : "0 8px 16px rgba(0,0,0,0.1)",
                     cursor: isActive ? "default" : "pointer",
+                    transformOrigin: "center center",
                   }}
                 >
                   <div className="flex-1 flex items-center justify-center p-6">
