@@ -96,6 +96,7 @@ function BookModal({
 export function BookCarousel({ items }: BookCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [modal, setModal] = useState<{ item: ContentItem; theme: (typeof cardThemes)[0] } | null>(null);
+  const [dragOffset, setDragOffset] = useState(0);
 
   const dragStartX = useRef<number | null>(null);
   const didDrag = useRef(false);
@@ -105,14 +106,23 @@ export function BookCarousel({ items }: BookCarouselProps) {
   const prev = () => setActiveIndex((i) => (i === 0 ? items.length - 1 : i - 1));
   const next = () => setActiveIndex((i) => (i === items.length - 1 ? 0 : i + 1));
 
-  const onPointerDown = (x: number) => { dragStartX.current = x; didDrag.current = false; };
-  const onPointerMove = (x: number) => { if (dragStartX.current !== null && Math.abs(x - dragStartX.current) > 8) didDrag.current = true; };
+  const onPointerDown = (x: number) => { dragStartX.current = x; didDrag.current = false; setDragOffset(0); };
+  const onPointerMove = (x: number) => { 
+    if (dragStartX.current !== null) {
+      const delta = x - dragStartX.current;
+      if (Math.abs(delta) > 8) didDrag.current = true; 
+      setDragOffset(delta);
+    }
+  };
   const onPointerUp = (x: number) => {
     if (dragStartX.current === null) return;
     const delta = x - dragStartX.current;
     if (Math.abs(delta) > 40) { delta < 0 ? next() : prev(); }
     dragStartX.current = null;
+    setDragOffset(0);
   };
+
+  const isDragging = dragOffset !== 0;
 
   return (
     <>
@@ -127,7 +137,7 @@ export function BookCarousel({ items }: BookCarouselProps) {
 
         {/* ══════════════════ DESKTOP CAROUSEL (INFINITE LOOP) ══════════════════ */}
         <div
-          className="hidden md:flex relative w-full py-12 cursor-grab active:cursor-grabbing justify-center overflow-visible"
+          className="hidden md:flex relative w-full py-12 cursor-grab active:cursor-grabbing justify-center overflow-visible touch-pan-y"
           style={{ height: "580px", alignItems: "center" }}
           onMouseDown={(e) => onPointerDown(e.clientX)}
           onMouseMove={(e) => onPointerMove(e.clientX)}
@@ -151,7 +161,7 @@ export function BookCarousel({ items }: BookCarouselProps) {
               const isActive = diff === 0;
 
               // Calculate positions (CARD_W + CARD_GAP = 324)
-              const translateX = diff * 324;
+              const translateX = diff * 324 + dragOffset;
               const scale = isActive ? 1.05 : 0.95;
               const opacity = absDiff === 0 ? 1 : absDiff === 1 ? 0.6 : 0.3;
               const zIndex = 30 - absDiff;
@@ -160,7 +170,7 @@ export function BookCarousel({ items }: BookCarouselProps) {
                 <div
                   key={item.id}
                   onClick={() => { if (!didDrag.current) setActiveIndex(idx); }}
-                  className="absolute inset-0 rounded-3xl overflow-hidden flex flex-col transition-all duration-500 ease-out"
+                  className={`absolute inset-0 rounded-3xl overflow-hidden flex flex-col ${isDragging ? '' : 'transition-all duration-500 ease-out'}`}
                   style={{
                     backgroundColor: theme.bg,
                     zIndex,
@@ -173,7 +183,7 @@ export function BookCarousel({ items }: BookCarouselProps) {
                 >
                   <div className="flex-1 flex items-center justify-center p-6">
                     <div
-                      className="rounded-xl overflow-hidden shadow-xl transition-all duration-500"
+                      className={`rounded-xl overflow-hidden shadow-xl ${isDragging ? '' : 'transition-all duration-500'}`}
                       style={{
                         width: isActive ? "160px" : "130px",
                         height: isActive ? "240px" : "195px",
@@ -212,7 +222,7 @@ export function BookCarousel({ items }: BookCarouselProps) {
 
         {/* ══════════════════ MOBILE STACKED DECK ══════════════════ */}
         <div
-          className="md:hidden w-full flex justify-center py-6 cursor-grab active:cursor-grabbing"
+          className="md:hidden w-full flex justify-center py-6 cursor-grab active:cursor-grabbing touch-pan-y"
           style={{ height: "540px" }}
           onTouchStart={(e) => onPointerDown(e.touches[0].clientX)}
           onTouchMove={(e) => onPointerMove(e.touches[0].clientX)}
@@ -237,8 +247,8 @@ export function BookCarousel({ items }: BookCarouselProps) {
               const theme = cardThemes[idx % cardThemes.length];
               const isActive = idx === activeIndex;
 
-              // True stacked deck geometry without rotation, exactly matching Image 2
-              const translateX = diff * 28;       
+              // True stacked deck geometry, dampened drag for a heavier physical feel
+              const translateX = diff * 28 + (dragOffset * 0.5);       
               const scale = 1 - absDiff * 0.06;   
               const zIndex = 30 - absDiff;
               const opacity = absDiff > 3 ? 0 : 1;
@@ -247,7 +257,7 @@ export function BookCarousel({ items }: BookCarouselProps) {
                 <div
                   key={item.id}
                   onClick={() => { if (!didDrag.current) setActiveIndex(idx); }}
-                  className="absolute inset-0 rounded-2xl overflow-hidden flex flex-col transition-all duration-500 ease-out"
+                  className={`absolute inset-0 rounded-2xl overflow-hidden flex flex-col ${isDragging ? '' : 'transition-all duration-500 ease-out'}`}
                   style={{
                     backgroundColor: theme.bg,
                     zIndex,
