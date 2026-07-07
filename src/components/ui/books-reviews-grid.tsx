@@ -47,7 +47,7 @@ export function BooksReviewsGrid({ items }: BooksGridProps) {
 
             {/* Body */}
             <div className="px-8 pb-8 -mt-6 relative">
-              <p className="font-sans text-[11px] font-bold tracking-widest uppercase mb-1.5 text-[#1a1715]/60 dark:text-white/60">
+              <p className="font-serif italic text-sm tracking-wide mb-1.5 text-[#1a1715]/60 dark:text-white/60">
                 {selectedBook.author}
               </p>
               <h2 className="font-serif font-bold text-[28px] leading-tight mb-3 text-[#1a1715] dark:text-white">
@@ -93,7 +93,7 @@ export function BooksReviewsGrid({ items }: BooksGridProps) {
             <h3 className="font-serif font-bold text-[17px] leading-snug text-text-main mb-1.5 line-clamp-2">
               {item.title}
             </h3>
-            <p className="font-sans text-[10px] font-bold tracking-widest uppercase text-text-muted mb-5 line-clamp-1">
+            <p className="font-serif italic text-sm tracking-wide text-text-muted mb-5 line-clamp-1">
               {item.author}
             </p>
             

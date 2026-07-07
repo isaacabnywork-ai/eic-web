@@ -58,7 +58,7 @@ function BookModal({
         </div>
 
         <div className="px-6 pb-8 -mt-3 relative">
-          <p className="text-[11px] font-bold tracking-widest uppercase mb-1" style={{ color: theme.mutedText }}>
+          <p className="font-serif italic text-sm tracking-wide mb-1" style={{ color: theme.mutedText }}>
             {item.author}
           </p>
           <h2 className="font-serif font-bold text-2xl leading-tight mb-2" style={{ color: theme.text }}>
@@ -130,7 +130,7 @@ export function BookCarousel({ items }: BookCarouselProps) {
 
       <div className="w-full flex flex-col items-center select-none overflow-hidden pb-10">
         <div className="w-full mb-6 px-4 md:px-0 text-left flex items-center justify-between">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold uppercase tracking-wide text-[#1a1715] dark:text-white">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold tracking-wide text-[#1a1715] dark:text-white capitalize">
             BOOK REVIEWS
           </h2>
         </div>
@@ -193,7 +193,7 @@ export function BookCarousel({ items }: BookCarouselProps) {
                     </div>
                   </div>
                   <div className="px-6 pb-8">
-                    <p className="text-[10px] font-bold tracking-widest uppercase mb-1" style={{ color: theme.mutedText }}>
+                    <p className="font-serif italic text-sm tracking-wide mb-1" style={{ color: theme.mutedText }}>
                       {item.author}
                     </p>
                     <h3 className="font-serif font-bold leading-snug" style={{ color: theme.text, fontSize: isActive ? "20px" : "16px" }}>
@@ -274,7 +274,7 @@ export function BookCarousel({ items }: BookCarouselProps) {
                     </div>
                   </div>
                   <div className="px-6 pb-8">
-                    <p className="text-[10px] font-bold tracking-widest uppercase mb-1.5" style={{ color: theme.mutedText }}>
+                    <p className="font-serif italic text-sm tracking-wide mb-1.5" style={{ color: theme.mutedText }}>
                       {item.author}
                     </p>
                     <h3 className="font-serif font-bold text-[22px] leading-tight" style={{ color: theme.text }}>

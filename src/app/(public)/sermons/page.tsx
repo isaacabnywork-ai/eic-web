@@ -9,7 +9,7 @@ export default async function SermonsArchivePage() {
     <div className="w-full bg-[#1a1715] min-h-screen">
       <div className="px-4 md:px-8 py-8 lg:py-24 pt-24 w-full">
         <div className="mb-12 text-center md:text-left">
-          <h1 className="font-sans font-black tracking-tighter uppercase text-4xl md:text-5xl lg:text-7xl text-white mb-6 leading-[0.85]">
+          <h1 className="font-serif font-bold tracking-tight text-4xl md:text-5xl lg:text-7xl text-white mb-6 leading-tight">
             SERMONS
           </h1>
           <p className="text-white/70 max-w-2xl">

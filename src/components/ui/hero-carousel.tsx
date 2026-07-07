@@ -48,10 +48,10 @@ export function HeroCarousel({ items }: { items: ContentItem[] }) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent md:from-black/80 md:via-black/20 md:bg-gradient-to-r md:to-transparent" />
           
           <div className="absolute bottom-8 md:bottom-12 left-0 p-6 md:p-12 w-full md:w-2/3">
-            <span className="uppercase tracking-widest text-xs font-bold text-accent mb-2 block">
-              {item.type === 'sermon_podcast' ? 'New Sermon' : item.type.replace('_', ' ').toUpperCase()}
+            <span className="font-serif italic text-sm tracking-wide text-accent mb-2 block">
+              {item.type === 'sermon_podcast' ? 'New Sermon' : item.type.replace('_', ' ')}
             </span>
-            <h2 className="font-sans font-black tracking-tighter uppercase text-4xl md:text-5xl lg:text-7xl text-white leading-[0.85] mb-4 drop-shadow-lg">
+            <h2 className="font-serif font-bold tracking-tight text-4xl md:text-5xl lg:text-7xl text-white leading-tight mb-4 drop-shadow-lg">
               {item.title}
             </h2>
             <p className="text-gray-300 md:text-lg mb-6 line-clamp-2">

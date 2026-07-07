@@ -84,10 +84,10 @@ export function FeaturedPodcastPlayer({ podcast }: FeaturedPodcastPlayerProps) {
         {/* Left Column - Branding */}
         <div className="flex flex-col md:flex-row gap-8 items-center md:items-start justify-center md:justify-end">
           <div className="flex flex-col items-center md:items-start">
-            <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-black/50 dark:text-white/50 mb-6 text-center md:text-left">
+            <p className="font-serif italic text-sm tracking-wide text-black/50 dark:text-white/50 mb-6 text-center md:text-left">
               Featured Podcast
             </p>
-            <h2 className="font-sans text-5xl md:text-6xl font-black uppercase text-[#1a1715] dark:text-white leading-[0.9] tracking-tighter text-center md:text-left mb-6">
+            <h2 className="font-serif text-5xl md:text-6xl font-bold tracking-tight text-[#1a1715] dark:text-white leading-tight text-center md:text-left mb-6">
               {podcast.author}
             </h2>
             <button className="bg-[#1a1715] dark:bg-white text-white dark:text-[#1a1715] text-xs font-bold uppercase tracking-widest px-6 py-3 flex items-center gap-2 hover:bg-black dark:hover:bg-gray-200 transition-colors">
@@ -101,7 +101,7 @@ export function FeaturedPodcastPlayer({ podcast }: FeaturedPodcastPlayerProps) {
 
         {/* Right Column - Player */}
         <div className="flex flex-col">
-          <p className="text-[10px] font-bold tracking-[0.2em] uppercase text-black/50 dark:text-white/50 mb-2">
+          <p className="font-serif italic text-sm tracking-wide text-black/50 dark:text-white/50 mb-2">
             Latest Episode
           </p>
           <h3 className="font-serif font-bold text-3xl md:text-4xl text-[#1a1715] dark:text-white mb-4">

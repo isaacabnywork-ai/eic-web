@@ -44,7 +44,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-[80vh] flex items-center justify-center px-4 py-24">
       <div className="w-full max-w-md p-8 bg-card-bg border border-border rounded-lg shadow-lg">
-        <h1 className="font-sans font-black tracking-tighter uppercase text-3xl md:text-4xl text-text-main text-center mb-6 leading-[0.85]">Welcome Back</h1>
+        <h1 className="font-serif font-bold tracking-tight text-3xl md:text-4xl text-text-main text-center mb-6 leading-tight">Welcome Back</h1>
         
         {error && (
           <div className="bg-red-500/10 text-red-500 border border-red-500/50 p-3 rounded-md mb-6 text-sm">

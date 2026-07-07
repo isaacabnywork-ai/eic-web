@@ -36,7 +36,7 @@ export function PodcastSection({ podcasts, hideHeader = false }: { podcasts: Con
     <div className="w-full flex flex-col pt-12">
       {!hideHeader && (
         <div className="flex items-center justify-between px-4 md:px-8 mb-6 max-w-7xl mx-auto w-full">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a1715] dark:text-white tracking-wide uppercase">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a1715] dark:text-white tracking-wide capitalize">
             PODCASTS
           </h2>
           <Link href="/podcasts" className="text-[#1a1715]/70 dark:text-white/70 hover:text-[#1a1715] dark:hover:text-white text-sm font-semibold transition-colors">
@@ -48,7 +48,7 @@ export function PodcastSection({ podcasts, hideHeader = false }: { podcasts: Con
       {selectedPodcast && <FeaturedPodcastPlayer podcast={selectedPodcast} />}
 
       <div className="px-4 md:px-8 py-12 w-full max-w-7xl mx-auto">
-        <h3 className="font-sans font-bold uppercase tracking-wider text-sm text-[#1a1715]/50 dark:text-white/50 mb-6">
+        <h3 className="font-serif italic tracking-wide text-sm text-[#1a1715]/50 dark:text-white/50 mb-6">
           Recent Episodes
         </h3>
         
@@ -76,7 +76,7 @@ export function PodcastSection({ podcasts, hideHeader = false }: { podcasts: Con
                       </div>
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a1715]/50 dark:text-white/50 mb-1">
+                      <span className="font-serif italic text-sm tracking-wide text-[#1a1715]/50 dark:text-white/50 mb-1">
                         {podcast.author}
                       </span>
                       <h4 className="font-serif font-bold text-[#1a1715] dark:text-white text-sm leading-tight line-clamp-2">

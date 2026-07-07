@@ -30,7 +30,7 @@ export function HorizontalRow({
   return (
     <section className="py-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="font-serif text-3xl md:text-4xl font-bold uppercase tracking-wide text-text-main">{title}</h2>
+        <h2 className="font-serif text-3xl md:text-4xl font-bold tracking-wide text-text-main capitalize">{title}</h2>
         {seeAllUrl && (
           <Link href={seeAllUrl} className="text-accent text-sm font-semibold hover:underline">
             See All

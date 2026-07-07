@@ -70,7 +70,7 @@ export function ContentCard({ item, aspectRatio = 'video', className = 'flex-shr
       </div>
       <div className="mt-3">
         <h3 className="font-serif font-bold text-text-main leading-tight line-clamp-2">{item.title}</h3>
-        <p className="text-sm text-text-muted mt-1">{item.author}</p>
+        <p className="font-serif italic text-sm tracking-wide text-text-muted mt-1">{item.author}</p>
       </div>
     </Link>
   );

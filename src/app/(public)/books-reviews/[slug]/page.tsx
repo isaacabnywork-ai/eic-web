@@ -23,7 +23,7 @@ export default async function BookReviewDetailPage({ params }: Props) {
             Premium
           </span>
         )}
-        <h1 className="font-sans font-black tracking-tighter uppercase text-4xl md:text-5xl lg:text-7xl text-text-main mb-6 leading-[0.85]">
+        <h1 className="font-serif font-bold tracking-tight text-4xl md:text-5xl lg:text-7xl text-text-main mb-6 leading-tight">
           {article.title}
         </h1>
         <div className="flex items-center justify-center gap-4 text-text-muted mt-8">

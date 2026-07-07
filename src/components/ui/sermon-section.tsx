@@ -62,7 +62,7 @@ export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
       {/* FEATURED SERMON PLAYER */}
       {selectedSermon && (
         <div className="w-full bg-[#1a1715] relative group">
-          <div className="w-full aspect-[4/3] md:aspect-video lg:aspect-[21/9] lg:max-h-[75vh] relative overflow-hidden bg-black">
+          <div className="w-full min-h-[50vh] md:min-h-[60vh] lg:min-h-[75vh] relative overflow-hidden bg-black flex items-center justify-center">
             {isPlaying && selectedSermon.videoUrl ? (
               <iframe 
                 src={getYoutubeEmbedUrl(selectedSermon.videoUrl)}
@@ -84,7 +84,7 @@ export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
                 <div className="absolute inset-0 flex flex-col justify-end px-6 md:px-16 pb-12 md:pb-16 max-w-7xl mx-auto w-full">
                   <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div className="flex-1 max-w-3xl">
-                      <h2 className="font-sans font-black tracking-tighter uppercase text-5xl md:text-7xl lg:text-8xl text-white leading-[0.85] mb-4 drop-shadow-lg">
+                      <h2 className="font-serif font-bold tracking-tight text-5xl md:text-7xl lg:text-8xl text-white leading-tight mb-4 drop-shadow-lg">
                         {selectedSermon.title}
                       </h2>
                     </div>
@@ -151,7 +151,7 @@ export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
                     </div>
                     
                     <div className="flex flex-col">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a1715]/60 dark:text-white/60 mb-2">
+                      <span className="font-serif italic text-sm tracking-wide text-[#1a1715]/60 dark:text-white/60 mb-2">
                         {sermon.author}
                       </span>
                       <h3 className="font-serif font-bold text-lg text-[#1a1715] dark:text-white leading-tight mb-2 group-hover:text-accent transition-colors line-clamp-1">
