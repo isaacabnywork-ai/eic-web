@@ -12,7 +12,7 @@ const navItems = [
   { label: 'Sermons', href: '/sermons-podcasts', icon: Headphones },
   { label: 'Blogs', href: '/blog-series', icon: BookOpen },
   { label: 'Events', href: '/events', icon: Calendar },
-  { label: 'Books', href: '/books-reviews', icon: Book },
+  { label: 'Book Reviews', href: '/books-reviews', icon: Book },
 ];
 
 export function LayoutShell({ children }: { children: React.ReactNode }) {
