@@ -113,7 +113,7 @@ export default async function AdminDashboardPage({ searchParams }: Props) {
         </div>
       ) : (
         // LIST VIEW
-        <ContentTable key={typeFilter} initialItems={items} type={pageTitle} />
+        <ContentTable key={typeFilter} initialItems={items} type={pageTitle} contentType={typeFilter} />
       )}
 
     </div>

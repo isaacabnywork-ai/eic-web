@@ -6,7 +6,7 @@ import { deleteContentItem, addContentItem } from "@/lib/db";
 import Link from "next/link";
 import { Plus } from "lucide-react";
 
-export function ContentTable({ initialItems, type }: { initialItems: ContentItem[], type: string }) {
+export function ContentTable({ initialItems, type, contentType }: { initialItems: ContentItem[], type: string, contentType: string }) {
   const [items, setItems] = useState(initialItems);
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
 
@@ -59,7 +59,7 @@ export function ContentTable({ initialItems, type }: { initialItems: ContentItem
       <div className="flex justify-between items-center mb-6">
         <h3 className="font-serif text-xl text-[#1a1715]">{type}</h3>
         <Link 
-          href="/admin/editor" 
+          href={`/admin/editor?type=${contentType}`} 
           className="bg-[#1a1715] hover:bg-black text-white px-5 py-2 rounded-full text-sm font-medium flex items-center gap-2 transition-colors shadow-sm"
         >
           {getAddButtonText()}
@@ -118,7 +118,7 @@ export function ContentTable({ initialItems, type }: { initialItems: ContentItem
             <h4 className="font-medium text-[#1a1715]">No {type} yet</h4>
             <p className="text-sm text-black/40 mt-1 mb-4">Get started by creating your first piece of content.</p>
             <Link 
-              href="/admin/editor" 
+              href={`/admin/editor?type=${contentType}`} 
               className="text-[#b47539] text-sm font-medium hover:underline"
             >
               {getAddButtonText()}

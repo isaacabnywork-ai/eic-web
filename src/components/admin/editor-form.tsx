@@ -6,13 +6,13 @@ import { ContentItem } from "@/components/ui/content-card";
 import { addContentItem, updateContentItem } from "@/lib/db";
 import { ImageUploader } from "@/components/admin/image-uploader";
 
-export function EditorForm({ initialData }: { initialData: ContentItem | null }) {
+export function EditorForm({ initialData, defaultType }: { initialData: ContentItem | null, defaultType?: string }) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   
   const [formData, setFormData] = useState({
     title: initialData?.title || "",
-    type: initialData?.type || "sermon_podcast",
+    type: initialData?.type || defaultType || "sermon_podcast",
     author: initialData?.author || "",
     imageUrl: initialData?.imageUrl || "",
     description: initialData?.description || "",
@@ -57,7 +57,7 @@ export function EditorForm({ initialData }: { initialData: ContentItem | null })
         finalUrl = formData.customUrl;
       }
 
-      const itemData = {
+      const itemData: any = {
         title: formData.title,
         type: formData.type as ContentItem['type'],
         author: formData.author,
@@ -70,6 +70,14 @@ export function EditorForm({ initialData }: { initialData: ContentItem | null })
         isPremium: formData.isPremium,
         showOnHome: formData.showOnHome,
       };
+
+      // Firestore STRICTLY forbids explicitly undefined values.
+      // This loops through our object and deletes any keys that are undefined.
+      Object.keys(itemData).forEach(key => {
+        if (itemData[key] === undefined) {
+          delete itemData[key];
+        }
+      });
 
       if (initialData?.id) {
         await updateContentItem(initialData.id, itemData);

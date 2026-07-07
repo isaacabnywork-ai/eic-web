@@ -10,6 +10,7 @@ interface Props {
 export default async function EditorPage({ searchParams }: Props) {
   const resolvedSearchParams = await searchParams;
   const id = resolvedSearchParams.id as string | undefined;
+  const defaultType = resolvedSearchParams.type as string | undefined;
   
   let initialData = null;
   if (id) {
@@ -33,7 +34,7 @@ export default async function EditorPage({ searchParams }: Props) {
       </div>
 
       <div className="bg-white rounded-xl border border-black/5 p-6 md:p-8 shadow-sm">
-        <EditorForm initialData={initialData} />
+        <EditorForm initialData={initialData} defaultType={defaultType} />
       </div>
     </div>
   );
