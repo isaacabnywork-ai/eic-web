@@ -31,13 +31,13 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
       <main className="flex-1 overflow-y-auto pb-32 relative w-full">
         {/* Transparent Overlay Header */}
         <header className="fixed top-0 left-0 right-0 z-40 bg-gradient-to-b from-black/80 to-transparent pt-6 pb-12 px-6 flex items-center justify-between pointer-events-none">
-          <div className="flex-1 pointer-events-auto">
+          <div className="flex-1 flex justify-start">
             {user ? (
               <div className="flex items-center gap-3">
-                <Link href="/library" className="w-10 h-10 rounded-full bg-border flex items-center justify-center hover:bg-border/80 transition-colors">
+                <Link href="/library" className="w-10 h-10 rounded-full bg-border flex items-center justify-center hover:bg-border/80 transition-colors pointer-events-auto">
                   <User size={20} className="text-text-main" />
                 </Link>
-                <button onClick={logout} className="text-sm font-medium text-white hover:text-white/80 transition-colors">
+                <button onClick={logout} className="text-sm font-medium text-white hover:text-white/80 transition-colors pointer-events-auto">
                   Log Out
                 </button>
               </div>
@@ -50,8 +50,10 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
           
           <Link href="/" className="font-serif text-2xl font-bold tracking-widest text-white pointer-events-auto">EIC</Link>
           
-          <div className="flex-1 flex justify-end pointer-events-auto cursor-pointer">
-            <Search size={24} className="text-white" />
+          <div className="flex-1 flex justify-end">
+            <button className="pointer-events-auto cursor-pointer p-2 -mr-2">
+              <Search size={24} className="text-white" />
+            </button>
           </div>
         </header>
         

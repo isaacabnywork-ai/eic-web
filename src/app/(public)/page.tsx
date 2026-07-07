@@ -29,15 +29,27 @@ export default async function Home() {
     events.length === 0 && 
     booksReviews.length === 0;
 
+  const sermons = sermonsPodcasts.filter(item => item.videoUrl);
+  const podcasts = sermonsPodcasts.filter(item => item.audioUrl);
+
   return (
     <div className="pb-8">
       
       <div className="px-4 md:px-8 space-y-12 mt-12">
-        {sermonsPodcasts.length > 0 && (
+        {sermons.length > 0 && (
           <HorizontalRow 
-            title="Sermons & Podcasts" 
-            items={sermonsPodcasts} 
+            title="Sermons" 
+            items={sermons} 
             aspectRatio="video"
+            seeAllUrl="/sermons-podcasts"
+          />
+        )}
+
+        {podcasts.length > 0 && (
+          <HorizontalRow 
+            title="Podcasts" 
+            items={podcasts} 
+            aspectRatio="square"
             seeAllUrl="/sermons-podcasts"
           />
         )}

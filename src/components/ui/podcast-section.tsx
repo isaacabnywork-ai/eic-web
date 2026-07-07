@@ -7,7 +7,27 @@ import { Play } from "lucide-react";
 import Link from "next/link";
 
 export function PodcastSection({ podcasts, hideHeader = false }: { podcasts: ContentItem[], hideHeader?: boolean }) {
-  const [selectedPodcast, setSelectedPodcast] = useState<ContentItem | null>(podcasts[0] || null);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [mounted, setMounted] = useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setItemsPerPage(10);
+      else if (window.innerWidth >= 768) setItemsPerPage(6);
+      else if (window.innerWidth >= 640) setItemsPerPage(4);
+      else setItemsPerPage(2);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const chunkSize = mounted ? itemsPerPage : 10;
+  const chunkedPodcasts = [];
+  for (let i = 0; i < podcasts.length; i += chunkSize) {
+    chunkedPodcasts.push(podcasts.slice(i, i + chunkSize));
+  }
 
   if (!podcasts || podcasts.length === 0) return null;
 
@@ -31,30 +51,43 @@ export function PodcastSection({ podcasts, hideHeader = false }: { podcasts: Con
           Recent Episodes
         </h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {podcasts.map((podcast) => (
-            <div 
-              key={podcast.id}
-              onClick={() => setSelectedPodcast(podcast)}
-              className={`flex items-start gap-4 p-4 rounded-xl cursor-pointer transition-all ${selectedPodcast?.id === podcast.id ? 'bg-[#1a1715]/5 dark:bg-white/10 ring-1 ring-[#1a1715]/10 dark:ring-white/20' : 'hover:bg-[#1a1715]/5 dark:hover:bg-white/5'}`}
-            >
-              <div className="w-16 h-16 shrink-0 rounded overflow-hidden relative group">
-                <img src={podcast.imageUrl} alt={podcast.title} className="w-full h-full object-cover" />
-                <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity ${selectedPodcast?.id === podcast.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
-                  <Play size={16} fill="currentColor" className="text-white ml-0.5" />
-                </div>
+        {!mounted ? (
+          <div className="w-full flex items-center justify-center py-12">
+            <div className="w-8 h-8 border-4 border-[#1a1715]/20 dark:border-white/20 border-t-[#1a1715] dark:border-t-white rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <div className="flex overflow-x-auto gap-8 pb-8 snap-x snap-mandatory hide-scrollbar scroll-smooth">
+            {chunkedPodcasts.map((page, pageIndex) => (
+              <div 
+                key={pageIndex} 
+                className="w-full shrink-0 snap-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6"
+              >
+                {page.map((podcast) => (
+                  <div 
+                    key={podcast.id}
+                    onClick={() => setSelectedPodcast(podcast)}
+                    className={`flex items-start gap-4 p-4 rounded-xl cursor-pointer transition-all ${selectedPodcast?.id === podcast.id ? 'bg-[#1a1715]/5 dark:bg-white/10 ring-1 ring-[#1a1715]/10 dark:ring-white/20' : 'hover:bg-[#1a1715]/5 dark:hover:bg-white/5'}`}
+                  >
+                    <div className="w-16 h-16 shrink-0 rounded overflow-hidden relative group">
+                      <img src={podcast.imageUrl} alt={podcast.title} className="w-full h-full object-cover" />
+                      <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity ${selectedPodcast?.id === podcast.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                        <Play size={16} fill="currentColor" className="text-white ml-0.5" />
+                      </div>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a1715]/50 dark:text-white/50 mb-1">
+                        {podcast.author}
+                      </span>
+                      <h4 className="font-serif font-bold text-[#1a1715] dark:text-white text-sm leading-tight line-clamp-2">
+                        {podcast.title}
+                      </h4>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="flex flex-col">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a1715]/50 dark:text-white/50 mb-1">
-                  {podcast.author}
-                </span>
-                <h4 className="font-serif font-bold text-[#1a1715] dark:text-white text-sm leading-tight line-clamp-2">
-                  {podcast.title}
-                </h4>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

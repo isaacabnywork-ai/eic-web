@@ -14,9 +14,9 @@ function getYoutubeEmbedUrl(url: string) {
       videoId = new URLSearchParams(parts[1]).get("v") || "";
     }
   } else if (url.includes("youtube.com/embed/")) {
-    return url;
+    videoId = url.split("youtube.com/embed/")[1]?.split("?")[0];
   }
-  return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : url;
+  return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1&controls=1&rel=0` : url;
 }
 
 export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
@@ -33,6 +33,28 @@ export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const [itemsPerPage, setItemsPerPage] = useState(10);
+  const [mounted, setMounted] = useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) setItemsPerPage(10); // lg: 5 cols * 2 rows
+      else if (window.innerWidth >= 768) setItemsPerPage(6); // md: 3 cols * 2 rows
+      else if (window.innerWidth >= 640) setItemsPerPage(4); // sm: 2 cols * 2 rows
+      else setItemsPerPage(2); // xs: 1 col * 2 rows
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const chunkSize = mounted ? itemsPerPage : 10;
+  const chunkedSermons = [];
+  for (let i = 0; i < sermons.length; i += chunkSize) {
+    chunkedSermons.push(sermons.slice(i, i + chunkSize));
+  }
+
   if (!sermons || sermons.length === 0) return null;
 
   return (
@@ -40,11 +62,11 @@ export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
       {/* FEATURED SERMON PLAYER */}
       {selectedSermon && (
         <div className="w-full bg-[#1a1715] relative group">
-          <div className="w-full aspect-video md:aspect-[21/9] lg:h-[70vh] relative overflow-hidden bg-black">
+          <div className="w-full aspect-[4/3] md:aspect-video lg:aspect-[21/9] lg:max-h-[75vh] relative overflow-hidden bg-black">
             {isPlaying && selectedSermon.videoUrl ? (
               <iframe 
                 src={getYoutubeEmbedUrl(selectedSermon.videoUrl)}
-                className="w-full h-full absolute inset-0"
+                className="w-full h-full absolute inset-0 z-10"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
@@ -103,35 +125,48 @@ export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
           </button>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-12">
-          {sermons.map((sermon) => (
-            <div 
-              key={sermon.id}
-              onClick={() => handleSelectSermon(sermon)}
-              className="group cursor-pointer flex flex-col"
-            >
-              <div className="w-full aspect-video rounded-xl overflow-hidden relative mb-4">
-                <img src={sermon.imageUrl} alt={sermon.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
-                <div className="absolute bottom-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                  <Play size={14} fill="currentColor" className="text-[#1a1715] ml-0.5" />
-                </div>
+        {!mounted ? (
+          <div className="w-full flex items-center justify-center py-12">
+            <div className="w-8 h-8 border-4 border-[#1a1715]/20 dark:border-white/20 border-t-[#1a1715] dark:border-t-white rounded-full animate-spin"></div>
+          </div>
+        ) : (
+          <div className="flex overflow-x-auto gap-8 pb-8 snap-x snap-mandatory hide-scrollbar scroll-smooth">
+            {chunkedSermons.map((page, pageIndex) => (
+              <div 
+                key={pageIndex} 
+                className="w-full shrink-0 snap-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-12"
+              >
+                {page.map((sermon) => (
+                  <div 
+                    key={sermon.id}
+                    onClick={() => handleSelectSermon(sermon)}
+                    className="group cursor-pointer flex flex-col"
+                  >
+                    <div className="w-full aspect-video rounded-xl overflow-hidden relative mb-4">
+                      <img src={sermon.imageUrl} alt={sermon.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                      <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+                      <div className="absolute bottom-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                        <Play size={14} fill="currentColor" className="text-[#1a1715] ml-0.5" />
+                      </div>
+                    </div>
+                    
+                    <div className="flex flex-col">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a1715]/60 dark:text-white/60 mb-2">
+                        {sermon.author}
+                      </span>
+                      <h3 className="font-serif font-bold text-lg text-[#1a1715] dark:text-white leading-tight mb-2 group-hover:text-accent transition-colors line-clamp-1">
+                        {sermon.title}
+                      </h3>
+                      <p className="text-sm text-[#1a1715]/70 dark:text-white/70 line-clamp-2 leading-relaxed">
+                        {sermon.description || "Watch this powerful message."}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
-              
-              <div className="flex flex-col">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#1a1715]/60 dark:text-white/60 mb-2">
-                  {sermon.author}
-                </span>
-                <h3 className="font-serif font-bold text-lg text-[#1a1715] dark:text-white leading-tight mb-2 group-hover:text-accent transition-colors line-clamp-1">
-                  {sermon.title}
-                </h3>
-                <p className="text-sm text-[#1a1715]/70 dark:text-white/70 line-clamp-2 leading-relaxed">
-                  {sermon.description || "Watch this powerful message."}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
