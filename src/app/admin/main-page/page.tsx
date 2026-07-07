@@ -154,11 +154,15 @@ export default function MainPageCurationPage() {
             >
               {/* Image thumbnail */}
               <div className="w-16 h-16 rounded-lg bg-black/5 overflow-hidden flex-shrink-0 relative">
-                <img 
-                  src={item.imageUrl} 
-                  alt={item.title} 
-                  className="w-full h-full object-cover"
-                />
+                {item.imageUrl ? (
+                  <img 
+                    src={item.imageUrl} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-black/20 font-serif text-[10px] text-center leading-tight p-1">No Image</div>
+                )}
               </div>
 
               {/* Text Info */}
