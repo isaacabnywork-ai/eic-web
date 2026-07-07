@@ -33,28 +33,6 @@ export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [mounted, setMounted] = useState(false);
-
-  React.useEffect(() => {
-    setMounted(true);
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) setItemsPerPage(10); // lg: 5 cols * 2 rows
-      else if (window.innerWidth >= 768) setItemsPerPage(6); // md: 3 cols * 2 rows
-      else if (window.innerWidth >= 640) setItemsPerPage(4); // sm: 2 cols * 2 rows
-      else setItemsPerPage(2); // xs: 1 col * 2 rows
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const chunkSize = mounted ? itemsPerPage : 10;
-  const chunkedSermons = [];
-  for (let i = 0; i < sermons.length; i += chunkSize) {
-    chunkedSermons.push(sermons.slice(i, i + chunkSize));
-  }
-
   if (!sermons || sermons.length === 0) return null;
 
   return (
@@ -81,14 +59,14 @@ export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                 
                 {/* Overlay Text (matching the Radical design) */}
-                <div className="absolute inset-0 flex flex-col justify-end px-6 md:px-16 pb-12 md:pb-16 max-w-7xl mx-auto w-full">
+                <div className="absolute inset-0 flex flex-col justify-end px-6 md:px-16 pb-12 md:pb-16 w-full">
                   <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
-                    <div className="flex-1 max-w-3xl">
+                    <div className="flex-1 max-w-4xl">
                       <h2 className="font-serif font-bold tracking-tight text-5xl md:text-7xl lg:text-8xl text-white leading-tight mb-4 drop-shadow-lg">
                         {selectedSermon.title}
                       </h2>
                     </div>
-                    <div className="flex-1 max-w-md">
+                    <div className="flex-1 max-w-xl">
                       <p className="text-white/90 text-sm md:text-base leading-relaxed drop-shadow-md">
                         {selectedSermon.description || "Watch our latest featured sermon message."}
                       </p>
@@ -109,7 +87,7 @@ export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
       )}
 
       {/* SERMONS GRID */}
-      <div className="px-4 md:px-8 py-16 w-full max-w-[1400px] mx-auto">
+      <div className="px-4 md:px-8 py-16 w-full">
         <div className="flex items-center gap-3 mb-10 overflow-x-auto pb-4 hide-scrollbar">
           <button className="px-5 py-1.5 rounded-full bg-[#1a1715] dark:bg-white text-white dark:text-[#1a1715] text-sm font-semibold whitespace-nowrap">
             All
@@ -125,48 +103,35 @@ export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
           </button>
         </div>
         
-        {!mounted ? (
-          <div className="w-full flex items-center justify-center py-12">
-            <div className="w-8 h-8 border-4 border-[#1a1715]/20 dark:border-white/20 border-t-[#1a1715] dark:border-t-white rounded-full animate-spin"></div>
-          </div>
-        ) : (
-          <div className="flex overflow-x-auto gap-8 pb-8 snap-x snap-mandatory hide-scrollbar scroll-smooth">
-            {chunkedSermons.map((page, pageIndex) => (
-              <div 
-                key={pageIndex} 
-                className="w-full shrink-0 snap-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-12"
-              >
-                {page.map((sermon) => (
-                  <div 
-                    key={sermon.id}
-                    onClick={() => handleSelectSermon(sermon)}
-                    className="group cursor-pointer flex flex-col"
-                  >
-                    <div className="w-full aspect-video rounded-xl overflow-hidden relative mb-4">
-                      <img src={sermon.imageUrl} alt={sermon.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                      <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
-                      <div className="absolute bottom-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
-                        <Play size={14} fill="currentColor" className="text-[#1a1715] ml-0.5" />
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-col">
-                      <span className="font-serif italic text-sm tracking-wide text-[#1a1715]/60 dark:text-white/60 mb-2">
-                        {sermon.author}
-                      </span>
-                      <h3 className="font-serif font-bold text-lg text-[#1a1715] dark:text-white leading-tight mb-2 group-hover:text-accent transition-colors line-clamp-1">
-                        {sermon.title}
-                      </h3>
-                      <p className="text-sm text-[#1a1715]/70 dark:text-white/70 line-clamp-2 leading-relaxed">
-                        {sermon.description || "Watch this powerful message."}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+        <div className="grid grid-rows-1 md:grid-rows-2 grid-flow-col auto-cols-[85vw] sm:auto-cols-[300px] md:auto-cols-[280px] gap-x-6 gap-y-12 overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar scroll-smooth">
+          {sermons.map((sermon) => (
+            <div 
+              key={sermon.id}
+              onClick={() => handleSelectSermon(sermon)}
+              className="group cursor-pointer flex flex-col snap-start"
+            >
+              <div className="w-full aspect-video rounded-xl overflow-hidden relative mb-4">
+                <img src={sermon.imageUrl} alt={sermon.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+                <div className="absolute bottom-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                  <Play size={14} fill="currentColor" className="text-[#1a1715] ml-0.5" />
+                </div>
               </div>
-            ))}
-          </div>
-        )}
+              
+              <div className="flex flex-col">
+                <span className="font-serif italic text-sm tracking-wide text-[#1a1715]/60 dark:text-white/60 mb-2">
+                  {sermon.author}
+                </span>
+                <h3 className="font-serif font-bold text-lg text-[#1a1715] dark:text-white leading-tight mb-2 group-hover:text-accent transition-colors line-clamp-1">
+                  {sermon.title}
+                </h3>
+                <p className="text-sm text-[#1a1715]/70 dark:text-white/70 line-clamp-2 leading-relaxed">
+                  {sermon.description || "Watch this powerful message."}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
