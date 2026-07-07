@@ -40,7 +40,7 @@ export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
       {/* FEATURED SERMON PLAYER */}
       {selectedSermon && (
         <div className="w-full bg-[#1a1715] relative group">
-          <div className="w-full aspect-video max-h-[75vh] relative overflow-hidden bg-black flex items-center justify-center">
+          <div className="w-full h-[60vh] md:h-[75vh] lg:h-[85vh] relative overflow-hidden bg-black flex items-center justify-center">
             {isPlaying && selectedSermon.videoUrl ? (
               <iframe 
                 src={getYoutubeEmbedUrl(selectedSermon.videoUrl)}
