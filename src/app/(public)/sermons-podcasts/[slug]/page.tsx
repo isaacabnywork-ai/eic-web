@@ -33,7 +33,7 @@ export default async function SermonPodcastPage({ params }: Props) {
               Premium
             </span>
           )}
-          <h1 className="text-4xl md:text-5xl lg:text-7xl font-serif text-text-main mb-4 leading-tight">
+          <h1 className="font-sans font-black tracking-tighter uppercase text-4xl md:text-5xl lg:text-7xl text-text-main mb-4 leading-[0.85]">
             {sermon.title}
           </h1>
           <p className="text-lg md:text-xl text-white/80 mb-8">

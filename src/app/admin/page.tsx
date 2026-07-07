@@ -40,7 +40,7 @@ export default async function AdminDashboardPage({ searchParams }: Props) {
       
       {/* Top Bar matching RPM screenshot */}
       <div className="flex items-center justify-between mb-8 pb-4 border-b border-black/5">
-        <h1 className="text-2xl font-serif text-[#1a1715]">{pageTitle}</h1>
+        <h1 className="font-sans font-black tracking-tighter uppercase text-2xl md:text-3xl text-[#1a1715]">{pageTitle}</h1>
         <div className="flex items-center gap-2 px-3 py-1.5 bg-black/5 rounded-full">
           <div className="w-2 h-2 rounded-full bg-black/40"></div>
           <span className="text-xs font-medium text-black/60">admin@eic.com</span>

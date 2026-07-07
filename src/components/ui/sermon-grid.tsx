@@ -17,7 +17,7 @@ export function SermonGrid({ items, hideHeader = false }: SermonGridProps) {
     <div className="w-full">
       {!hideHeader && (
         <div className="flex items-center justify-between mb-8">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a1715] dark:text-white tracking-wide">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a1715] dark:text-white tracking-wide uppercase">
             SERMONS
           </h2>
           <Link href="/sermons" className="text-[#1a1715]/70 dark:text-white/70 hover:text-[#1a1715] dark:hover:text-white text-sm font-semibold transition-colors">
@@ -42,7 +42,7 @@ export function SermonGrid({ items, hideHeader = false }: SermonGridProps) {
               </div>
             </div>
             
-            <h3 className="font-bold text-[#1a1715] dark:text-white text-[15px] leading-tight mb-1.5 line-clamp-2">
+            <h3 className="font-serif font-bold text-[#1a1715] dark:text-white text-[15px] leading-tight mb-1.5 line-clamp-2">
               {item.title}
             </h3>
             <p className="text-[#1a1715]/60 dark:text-white/60 text-xs">

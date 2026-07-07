@@ -130,7 +130,7 @@ export function BookCarousel({ items }: BookCarouselProps) {
 
       <div className="w-full flex flex-col items-center select-none overflow-hidden pb-10">
         <div className="w-full mb-6 px-4 md:px-0 text-left flex items-center justify-between">
-          <h2 className="font-sans font-black tracking-tighter uppercase text-4xl text-[#1a1715] dark:text-white">
+          <h2 className="font-serif text-3xl md:text-4xl font-bold uppercase tracking-wide text-[#1a1715] dark:text-white">
             BOOK REVIEWS
           </h2>
         </div>

@@ -23,7 +23,7 @@ export default async function BlogSeriesDetailPage({ params }: Props) {
             Premium
           </span>
         )}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-text-main mb-6 leading-tight">
+        <h1 className="font-sans font-black tracking-tighter uppercase text-4xl md:text-5xl lg:text-7xl text-text-main mb-6 leading-[0.85]">
           {article.title}
         </h1>
         <div className="flex items-center justify-center gap-4 text-text-muted mt-8">

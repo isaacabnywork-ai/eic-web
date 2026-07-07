@@ -39,7 +39,7 @@ export default function LibraryPage() {
   return (
     <div className="px-4 md:px-8 py-8 lg:py-24 max-w-[1400px] mx-auto pt-24 min-h-[80vh]">
       <div className="flex items-center justify-between mb-12">
-        <h1 className="text-4xl font-serif text-text-main">My Library</h1>
+        <h1 className="font-sans font-black tracking-tighter uppercase text-4xl md:text-5xl lg:text-7xl text-text-main mb-6 leading-[0.85]">My Library</h1>
       </div>
 
       {bookmarks.length === 0 ? (

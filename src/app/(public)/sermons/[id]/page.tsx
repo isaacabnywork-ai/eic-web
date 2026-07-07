@@ -48,7 +48,7 @@ export default async function SermonSinglePage({ params }: { params: { id: strin
           <p className="text-white/60 font-bold uppercase tracking-widest text-sm mb-3">
             {sermon.author}
           </p>
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-white leading-tight mb-6">
+          <h1 className="font-sans font-black tracking-tighter uppercase text-4xl md:text-5xl lg:text-7xl text-white mb-6 leading-[0.85]">
             {sermon.title}
           </h1>
           <div className="w-16 h-1 bg-white/20 mb-8"></div>

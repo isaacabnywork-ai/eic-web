@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${fraunces.variable} font-sans antialiased bg-bg text-text-main`} suppressHydrationWarning>
+      <body className={`${fraunces.variable} ${sourceSans.variable} font-sans antialiased bg-bg text-text-main`} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

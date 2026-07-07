@@ -24,7 +24,7 @@ export default async function EditorPage({ searchParams }: Props) {
       </Link>
       
       <div className="mb-8 pb-4 border-b border-black/5">
-        <h1 className="text-3xl font-serif font-bold text-[#1a1715]">
+        <h1 className="font-sans font-black tracking-tighter uppercase text-3xl text-[#1a1715]">
           {initialData ? "Edit Content" : "Create New Content"}
         </h1>
         <p className="text-black/60 mt-2">

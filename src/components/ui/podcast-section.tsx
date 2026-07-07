@@ -7,6 +7,7 @@ import { Play } from "lucide-react";
 import Link from "next/link";
 
 export function PodcastSection({ podcasts, hideHeader = false }: { podcasts: ContentItem[], hideHeader?: boolean }) {
+  const [selectedPodcast, setSelectedPodcast] = useState<ContentItem | null>(podcasts[0] || null);
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [mounted, setMounted] = useState(false);
 
