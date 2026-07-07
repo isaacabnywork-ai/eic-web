@@ -2,9 +2,10 @@ import { notFound } from "next/navigation";
 import { getContentById } from "@/lib/db";
 import { Calendar, Wallet, Users } from "lucide-react";
 
-export default async function EventDetailPage({ params }: { params: { slug: string } }) {
+export default async function EventDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   // Use getContentById to guarantee we find the event regardless of its url property
-  const event = await getContentById(params.slug);
+  const event = await getContentById(slug);
   
   if (!event || event.type !== 'event') {
     notFound();
