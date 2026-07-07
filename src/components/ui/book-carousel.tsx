@@ -48,7 +48,11 @@ function BookModal({
         </button>
 
         <div className="relative w-full h-56">
-          <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover" />
+          {item.imageUrl ? (
+            <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-black/5 font-serif text-sm opacity-50" style={{ color: theme.text }}>No Image</div>
+          )}
           <div
             className="absolute inset-0"
             style={{
@@ -189,7 +193,11 @@ export function BookCarousel({ items }: BookCarouselProps) {
                         height: isActive ? "240px" : "195px",
                       }}
                     >
-                      <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover" draggable={false} />
+                      {item.imageUrl ? (
+                        <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover" draggable={false} />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-black/5 font-serif text-sm opacity-50" style={{ color: theme.text }}>No Image</div>
+                      )}
                     </div>
                   </div>
                   <div className="px-6 pb-8">
@@ -270,7 +278,11 @@ export function BookCarousel({ items }: BookCarouselProps) {
                 >
                   <div className="flex-1 flex items-center justify-center pt-8 pb-4">
                     <div className="w-36 h-52 rounded-md overflow-hidden shadow-xl">
-                      <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover" draggable={false} />
+                      {item.imageUrl ? (
+                        <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover" draggable={false} />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-black/5 font-serif text-sm opacity-50" style={{ color: theme.text }}>No Image</div>
+                      )}
                     </div>
                   </div>
                   <div className="px-6 pb-8">

@@ -54,11 +54,15 @@ export function ContentCard({ item, aspectRatio = 'video', className = 'flex-shr
     <Link href={item.url} className={`group/card block relative ${className}`}>
       <div className={`relative overflow-hidden bg-card-bg ${aspectClasses[aspectRatio]}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img 
-          src={item.imageUrl} 
-          alt={item.title} 
-          className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105"
-        />
+        {item.imageUrl ? (
+          <img 
+            src={item.imageUrl} 
+            alt={item.title} 
+            className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105"
+          />
+        ) : (
+          <div className="w-full h-full flex items-center justify-center bg-[#f5f5f5] text-black/20 font-serif text-xs">No Image</div>
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
         
         {item.isPremium && (
