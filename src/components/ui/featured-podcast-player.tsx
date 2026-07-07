@@ -79,7 +79,7 @@ export function FeaturedPodcastPlayer({ podcast }: FeaturedPodcastPlayerProps) {
       {/* Decorative textured background overlay could go here */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
 
-      <div className="w-full relative z-10 grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-center">
+      <div className="w-full max-w-7xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-center">
         
         {/* Left Column - Branding */}
         <div className="flex flex-col md:flex-row gap-8 items-center md:items-start justify-center md:justify-end">

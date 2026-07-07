@@ -87,7 +87,7 @@ export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
       )}
 
       {/* SERMONS GRID */}
-      <div className="px-4 md:px-8 py-16 w-full">
+      <div className="px-4 md:px-8 py-16 w-full max-w-7xl mx-auto">
         <div className="flex items-center gap-3 mb-10 overflow-x-auto pb-4 hide-scrollbar">
           <button className="px-5 py-1.5 rounded-full bg-[#1a1715] dark:bg-white text-white dark:text-[#1a1715] text-sm font-semibold whitespace-nowrap">
             All

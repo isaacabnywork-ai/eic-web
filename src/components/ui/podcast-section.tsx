@@ -14,7 +14,7 @@ export function PodcastSection({ podcasts, hideHeader = false }: { podcasts: Con
   return (
     <div className="w-full flex flex-col pt-12">
       {!hideHeader && (
-        <div className="flex items-center justify-between px-4 md:px-8 mb-6 w-full">
+        <div className="flex items-center justify-between px-4 md:px-8 mb-6 w-full max-w-7xl mx-auto">
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a1715] dark:text-white tracking-wide capitalize">
             PODCASTS
           </h2>
@@ -26,7 +26,7 @@ export function PodcastSection({ podcasts, hideHeader = false }: { podcasts: Con
 
       {selectedPodcast && <FeaturedPodcastPlayer podcast={selectedPodcast} />}
 
-      <div className="px-4 md:px-8 py-12 w-full">
+      <div className="px-4 md:px-8 py-12 w-full max-w-7xl mx-auto">
         <h3 className="font-serif italic tracking-wide text-sm text-[#1a1715]/50 dark:text-white/50 mb-6">
           Recent Episodes
         </h3>
