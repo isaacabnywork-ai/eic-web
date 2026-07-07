@@ -51,7 +51,7 @@ export function HeroCarousel({ items }: { items: ContentItem[] }) {
             <span className="font-serif italic text-sm tracking-wide text-accent mb-2 block">
               {item.type === 'sermon_podcast' ? 'New Sermon' : item.type.replace('_', ' ')}
             </span>
-            <h2 className="font-serif font-bold tracking-tight text-4xl md:text-5xl lg:text-7xl text-white leading-tight mb-4 drop-shadow-lg">
+            <h2 className="font-serif font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl text-white leading-tight mb-4 drop-shadow-lg">
               {item.title}
             </h2>
             <p className="text-gray-300 md:text-lg mb-6 line-clamp-2">

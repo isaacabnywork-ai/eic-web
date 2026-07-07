@@ -87,7 +87,7 @@ export function FeaturedPodcastPlayer({ podcast }: FeaturedPodcastPlayerProps) {
             <p className="font-serif italic text-sm tracking-wide text-black/50 dark:text-white/50 mb-6 text-center md:text-left">
               Featured Podcast
             </p>
-            <h2 className="font-serif text-5xl md:text-6xl font-bold tracking-tight text-[#1a1715] dark:text-white leading-tight text-center md:text-left mb-6">
+            <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#1a1715] dark:text-white leading-tight text-center md:text-left mb-6">
               {podcast.author}
             </h2>
             <button className="bg-[#1a1715] dark:bg-white text-white dark:text-[#1a1715] text-xs font-bold uppercase tracking-widest px-6 py-3 flex items-center gap-2 hover:bg-black dark:hover:bg-gray-200 transition-colors">

@@ -62,7 +62,7 @@ export function SermonSection({ sermons }: { sermons: ContentItem[] }) {
                 <div className="absolute inset-0 flex flex-col justify-end px-6 md:px-16 pb-12 md:pb-16 w-full">
                   <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div className="flex-1 max-w-4xl">
-                      <h2 className="font-serif font-bold tracking-tight text-5xl md:text-7xl lg:text-8xl text-white leading-tight mb-4 drop-shadow-lg">
+                      <h2 className="font-serif font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl text-white leading-tight mb-4 drop-shadow-lg">
                         {selectedSermon.title}
                       </h2>
                     </div>
