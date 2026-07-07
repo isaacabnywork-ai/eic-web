@@ -154,12 +154,23 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
           </div>
         )}
 
-        <div className="space-y-2 md:col-span-2">
+        <div className="space-y-2">
           <label className="text-sm font-semibold text-[#1a1715]">Cover Image (Desktop 16:9 recommended)</label>
           <ImageUploader 
             defaultImage={formData.imageUrl} 
-            onUploadSuccess={(url) => setFormData(prev => ({ ...prev, imageUrl: url }))} 
+            onUploadSuccess={(url) => setFormData({ ...formData, imageUrl: url })} 
           />
+          <div className="flex flex-col sm:flex-row sm:items-center gap-2 pt-2">
+            <span className="text-[11px] font-bold text-black/40 tracking-wider">OR PASTE URL:</span>
+            <input 
+              type="text" 
+              name="imageUrl"
+              value={formData.imageUrl}
+              onChange={handleChange}
+              placeholder="https://example.com/image.jpg"
+              className="flex-1 text-sm bg-black/5 border border-black/10 rounded-md px-3 py-1.5 focus:outline-none focus:border-[#b47539] focus:bg-white transition-colors"
+            />
+          </div>
         </div>
       </div>
 
