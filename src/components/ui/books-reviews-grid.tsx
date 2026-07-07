@@ -77,7 +77,7 @@ export function BooksReviewsGrid({ items }: BooksGridProps) {
         </div>
       )}
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-x-4 md:gap-x-6 gap-y-10 md:gap-y-12">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-x-6 md:gap-x-8 gap-y-10 md:gap-y-12 max-w-6xl mx-auto">
         {items.map((item) => (
           <div key={item.id} className="flex flex-col group">
             {/* Book Cover */}

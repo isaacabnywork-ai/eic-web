@@ -117,12 +117,13 @@ export function BlogFilter({ initialArticles }: { initialArticles: ContentItem[]
         </button>
       </div>
 
-      <div className="flex flex-wrap gap-4 md:gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8 max-w-6xl mx-auto">
         {filteredArticles.map((article) => (
           <ContentCard 
             key={article.id} 
             item={article} 
             aspectRatio="portrait"
+            className="w-full"
           />
         ))}
       </div>
