@@ -22,6 +22,9 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
     isPremium: initialData?.isPremium || false,
     showOnHome: initialData?.showOnHome || false,
     customUrl: initialData?.url || "",
+    date: initialData?.date || "",
+    cost: initialData?.cost || "",
+    organizer: initialData?.organizer || "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -69,6 +72,9 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
         isFeatured: formData.isFeatured,
         isPremium: formData.isPremium,
         showOnHome: formData.showOnHome,
+        date: formData.type === 'event' ? formData.date : undefined,
+        cost: formData.type === 'event' ? formData.cost : undefined,
+        organizer: formData.type === 'event' ? formData.organizer : undefined,
       };
 
       // Firestore STRICTLY forbids explicitly undefined values.
@@ -178,13 +184,51 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
         <label className="text-sm font-semibold text-[#1a1715]">Description (Optional)</label>
         <textarea 
           name="description"
-          rows={4}
+          rows={6}
           value={formData.description}
           onChange={handleChange}
           className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 resize-none shadow-sm"
-          placeholder="Brief summary or description of the content..."
+          placeholder="Brief summary or description of the content... (Line breaks will be preserved)"
         />
       </div>
+
+      {formData.type === 'event' && (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-black/5 pt-6">
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-[#1a1715]">Event Date</label>
+            <input 
+              type="text"
+              name="date"
+              value={formData.date}
+              onChange={handleChange}
+              className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 shadow-sm"
+              placeholder="e.g., Feb 11 2025 or Every Sunday"
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-[#1a1715]">Cost</label>
+            <input 
+              type="text"
+              name="cost"
+              value={formData.cost}
+              onChange={handleChange}
+              className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 shadow-sm"
+              placeholder="e.g., Free, INR 300, etc."
+            />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-[#1a1715]">Organizer</label>
+            <input 
+              type="text"
+              name="organizer"
+              value={formData.organizer}
+              onChange={handleChange}
+              className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 shadow-sm"
+              placeholder="e.g., EIC or Hope Church"
+            />
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">

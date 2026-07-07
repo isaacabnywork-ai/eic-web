@@ -52,16 +52,9 @@ export default async function BlogSeriesDetailPage({ params }: Props) {
       {/* Article Body */}
       <div className="max-w-[700px] mx-auto px-4 md:px-8">
         <article className="prose prose-lg md:prose-xl dark:prose-invert prose-p:font-serif prose-p:leading-relaxed text-text-main">
-          {/* For now we just render description or body_text. In a real app we'd render HTML/Markdown */}
-          <p>
+          <div className="whitespace-pre-wrap">
             {article.description || "No content available for this article yet."}
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. 
-          </p>
-          <p>
-            Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor.
-          </p>
+          </div>
         </article>
       </div>
     </div>

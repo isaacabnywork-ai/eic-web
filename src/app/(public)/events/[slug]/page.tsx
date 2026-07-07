@@ -29,25 +29,13 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
             </div>
           )}
 
-          <div className="prose prose-lg dark:prose-invert max-w-none text-text-main/80 font-sans leading-relaxed">
+          <div className="prose prose-lg dark:prose-invert max-w-none text-text-main/80 font-sans leading-relaxed whitespace-pre-wrap">
             {event.description ? (
               <p>{event.description}</p>
             ) : (
               // Mock description if not provided in DB
               <div className="space-y-4">
-                <p>Equip Indian Churches (EIC) is having its regional conference.</p>
-                <p>At the EIC LIFE Conference, we will meet and think about basics of the Christian Life. We hope that this one-day conference would be a time of fellowship and encouragement to Churches and Christians.</p>
-                <p>So, if you live in or around the area, we request you to join us and to come and be encouraged, and from God's Word. The speakers are pastors of local churches from different parts of India who have a deep desire to help fellow believers and pastors around the country to have a better and Biblical understanding of the Christian life.</p>
-                <p>This event would be a great opportunity to sit under God's Word, make friends, and network with like-minded brothers and sisters from your city and neighbouring cities.</p>
-                <h3 className="font-bold text-text-main mt-8 mb-4">Topics</h3>
-                <ul className="list-decimal pl-5 space-y-2">
-                  <li>Faith: What do we believe?</li>
-                  <li>Life: How do we live?</li>
-                  <li>Community: Where should we belong?</li>
-                  <li>Growth: How do Christians mature and multiply?</li>
-                  <li>Hope: What are we living for?</li>
-                  <li>Panel discussion/Q&A</li>
-                </ul>
+                <p>No description provided for this event.</p>
               </div>
             )}
           </div>
@@ -70,8 +58,8 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
               <Calendar className="text-text-muted mt-1 shrink-0" size={24} />
               <div>
                 <h3 className="font-bold text-text-main text-sm tracking-widest uppercase mb-1">Date</h3>
-                <p className="text-text-muted">{event.date || 'Feb 11 2025'}</p>
-                {isExpired && <p className="text-red-500 text-sm mt-1 font-medium">Expired!</p>}
+                <p className="text-text-muted">{event.date || 'TBD'}</p>
+                {isExpired && <p className="text-red-500 text-sm mt-1 font-medium">Past Event</p>}
               </div>
             </div>
 
@@ -80,7 +68,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
               <Wallet className="text-text-muted mt-1 shrink-0" size={24} />
               <div>
                 <h3 className="font-bold text-text-main text-sm tracking-widest uppercase mb-1">Cost</h3>
-                <p className="text-text-muted">{event.cost || 'INR300.00'}</p>
+                <p className="text-text-muted">{event.cost || 'Free'}</p>
               </div>
             </div>
 
@@ -89,7 +77,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
               <Users className="text-text-muted mt-1 shrink-0" size={24} />
               <div>
                 <h3 className="font-bold text-text-main text-sm tracking-widest uppercase mb-1">Organizer</h3>
-                <p className="text-text-muted mb-4">{event.organizer || 'Equip Indian Churches'}</p>
+                <p className="text-text-muted mb-4">{event.organizer || 'EIC'}</p>
                 
                 {/* Organizer Socials */}
                 <div className="flex gap-2">
