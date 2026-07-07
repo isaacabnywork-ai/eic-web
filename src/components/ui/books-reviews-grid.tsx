@@ -39,7 +39,11 @@ export function BooksReviewsGrid({ items }: BooksGridProps) {
 
             {/* Hero image gradient fade */}
             <div className="relative w-full h-[280px]">
-              <img src={selectedBook.imageUrl} alt={selectedBook.title} className="w-full h-full object-cover" />
+              {selectedBook.imageUrl ? (
+                <img src={selectedBook.imageUrl} alt={selectedBook.title} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-black/5 font-serif text-sm opacity-50 text-[#1a1715] dark:text-white">No Image</div>
+              )}
               <div
                 className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#f8f7f5] dark:to-[#1a1715]"
               />
@@ -82,11 +86,15 @@ export function BooksReviewsGrid({ items }: BooksGridProps) {
           <div key={item.id} className="flex flex-col group">
             {/* Book Cover */}
             <div className="w-full aspect-[2/3] rounded-sm overflow-hidden shadow-[0_8px_24px_rgba(0,0,0,0.12)] mb-5 bg-gray-100 relative group-hover:shadow-[0_16px_32px_rgba(0,0,0,0.2)] transition-shadow duration-300">
-              <img 
-                src={item.imageUrl} 
-                alt={item.title} 
-                className="w-full h-full object-cover" 
-              />
+              {item.imageUrl ? (
+                <img 
+                  src={item.imageUrl} 
+                  alt={item.title} 
+                  className="w-full h-full object-cover" 
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-[#f5f5f5] text-black/20 font-serif text-sm">No Image</div>
+              )}
             </div>
             
             {/* Details */}
