@@ -7,7 +7,7 @@ import { useAudioPlayer } from '@/contexts/audio-player-context';
 export type ContentItem = {
   id: string;
   title: string;
-  type: 'sermon_podcast' | 'blog_series' | 'event' | 'book_review';
+  type: 'sermon_podcast' | 'blog_series' | 'event' | 'book_review' | 'banner';
   author: string;
   imageUrl: string;
   url: string;

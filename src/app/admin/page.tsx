@@ -17,19 +17,21 @@ export default async function AdminDashboardPage({ searchParams }: Props) {
     items = await getAllContentItems();
   }
 
-  const getTypeLabel = (type: string) => {
-    switch (type) {
-      case 'sermon_podcast': return 'Sermons & Podcasts';
-      case 'blog_series': return 'Blog Posts';
-      case 'event': return 'Events';
-      case 'book_review': return 'Books & Reviews';
-      default: return 'Dashboard';
-    }
-  };
+    const getTypeLabel = (type: string) => {
+      switch (type) {
+        case 'banner': return 'Banners';
+        case 'sermon_podcast': return 'Sermons & Podcasts';
+        case 'blog_series': return 'Blog Posts';
+        case 'event': return 'Events';
+        case 'book_review': return 'Books & Reviews';
+        default: return 'Dashboard';
+      }
+    };
 
   const pageTitle = typeFilter ? getTypeLabel(typeFilter) : 'Dashboard';
 
   // Calculate stats for Dashboard
+  const bannersCount = items.filter(i => i.type === 'banner').length;
   const sermonsCount = items.filter(i => i.type === 'sermon_podcast').length;
   const blogsCount = items.filter(i => i.type === 'blog_series').length;
   const eventsCount = items.filter(i => i.type === 'event').length;
@@ -50,9 +52,19 @@ export default async function AdminDashboardPage({ searchParams }: Props) {
       {!typeFilter ? (
         // DASHBOARD VIEW
         <div className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-white p-6 rounded-xl border border-black/5 shadow-sm flex items-center gap-4">
-              <div className="w-10 h-10 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div className="bg-white p-6 rounded-xl border border-black/5 shadow-sm flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+              <div className="w-10 h-10 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0">
+                <FileText size={20} />
+              </div>
+              <div>
+                <div className="text-2xl font-serif font-bold text-[#1a1715]">{bannersCount}</div>
+                <div className="text-xs text-black/40 font-medium uppercase tracking-wider">Banners</div>
+              </div>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl border border-black/5 shadow-sm flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+              <div className="w-10 h-10 rounded-lg bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
                 <Headphones size={20} />
               </div>
               <div>

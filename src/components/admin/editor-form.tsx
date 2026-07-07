@@ -21,6 +21,7 @@ export function EditorForm({ initialData }: { initialData: ContentItem | null })
     isFeatured: initialData?.isFeatured || false,
     isPremium: initialData?.isPremium || false,
     showOnHome: initialData?.showOnHome || false,
+    customUrl: initialData?.url || "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -49,7 +50,12 @@ export function EditorForm({ initialData }: { initialData: ContentItem | null })
       if (formData.type === 'book_review') routeName = 'books-reviews';
       if (formData.type === 'event') routeName = 'events';
 
-      const finalUrl = `/${routeName}/${slug}`;
+      let finalUrl = `/${routeName}/${slug}`;
+      
+      // If they provided a custom URL (e.g. for banners), use it instead
+      if (formData.customUrl && formData.customUrl.trim() !== "") {
+        finalUrl = formData.customUrl;
+      }
 
       const itemData = {
         title: formData.title,
@@ -109,11 +115,12 @@ export function EditorForm({ initialData }: { initialData: ContentItem | null })
             <option value="blog_series">Blog Series</option>
             <option value="event">Event</option>
             <option value="book_review">Book Review</option>
+            <option value="banner">Banner Slide</option>
           </select>
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-[#1a1715]">Author / Speaker</label>
+          <label className="text-sm font-semibold text-[#1a1715]">Author / Subtitle</label>
           <input 
             type="text"
             name="author"
@@ -121,12 +128,26 @@ export function EditorForm({ initialData }: { initialData: ContentItem | null })
             value={formData.author}
             onChange={handleChange}
             className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 shadow-sm"
-            placeholder="e.g., John Doe"
+            placeholder={formData.type === 'banner' ? "e.g., By Pastor John Doe" : "e.g., John Doe"}
           />
         </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-[#1a1715]">Cover Image</label>
+        {formData.type === 'banner' && (
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-[#1a1715]">Banner Link URL</label>
+            <input 
+              type="text"
+              name="customUrl"
+              value={formData.customUrl}
+              onChange={handleChange}
+              className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 shadow-sm"
+              placeholder="e.g., /sermons-podcasts/some-sermon"
+            />
+          </div>
+        )}
+
+        <div className="space-y-2 md:col-span-2">
+          <label className="text-sm font-semibold text-[#1a1715]">Cover Image (Desktop 16:9 recommended)</label>
           <ImageUploader 
             defaultImage={formData.imageUrl} 
             onUploadSuccess={(url) => setFormData(prev => ({ ...prev, imageUrl: url }))} 
@@ -173,16 +194,18 @@ export function EditorForm({ initialData }: { initialData: ContentItem | null })
       </div>
 
       <div className="flex flex-wrap items-center gap-6 pt-4 border-t border-black/5">
-        <label className="flex items-center gap-2 cursor-pointer group">
-          <input 
-            type="checkbox"
-            name="isFeatured"
-            checked={formData.isFeatured}
-            onChange={handleChange}
-            className="w-5 h-5 rounded border-black/20 text-[#b47539] focus:ring-[#b47539] accent-[#b47539] bg-white cursor-pointer"
-          />
-          <span className="text-sm font-medium text-[#1a1715] group-hover:text-[#b47539] transition-colors">Feature on Home Banner</span>
-        </label>
+        {formData.type !== 'banner' && (
+          <label className="flex items-center gap-2 cursor-pointer group">
+            <input 
+              type="checkbox"
+              name="isFeatured"
+              checked={formData.isFeatured}
+              onChange={handleChange}
+              className="w-5 h-5 rounded border-black/20 text-[#b47539] focus:ring-[#b47539] accent-[#b47539] bg-white cursor-pointer"
+            />
+            <span className="text-sm font-medium text-[#1a1715] group-hover:text-[#b47539] transition-colors">Feature on Home Banner</span>
+          </label>
+        )}
 
         <label className="flex items-center gap-2 cursor-pointer group">
           <input 
