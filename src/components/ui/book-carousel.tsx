@@ -127,18 +127,18 @@ export function BookCarousel({ items }: BookCarouselProps) {
 
         {/* ══════════════════ DESKTOP CAROUSEL ══════════════════ */}
         <div
-          className="hidden md:flex w-full py-12 cursor-grab active:cursor-grabbing"
+          className="hidden md:flex w-full py-12 cursor-grab active:cursor-grabbing px-4 md:px-8 overflow-visible"
+          style={{ height: "580px", alignItems: "center" }}
           onMouseDown={(e) => onPointerDown(e.clientX)}
           onMouseMove={(e) => onPointerMove(e.clientX)}
           onMouseUp={(e) => onPointerUp(e.clientX)}
           onMouseLeave={(e) => { if (dragStartX.current !== null) onPointerUp(e.clientX); }}
         >
-          <div className="w-1/2 flex-shrink-0" />
           <div
             className="flex items-center transition-transform duration-500 ease-out"
             style={{
               gap: `${CARD_GAP}px`,
-              transform: `translateX(-${activeIndex * (CARD_W + CARD_GAP) + CARD_W / 2}px)`,
+              transform: `translateX(-${activeIndex * (CARD_W + CARD_GAP)}px)`,
             }}
           >
             {items.map((item, idx) => {

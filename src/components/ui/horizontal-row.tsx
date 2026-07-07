@@ -38,11 +38,11 @@ export function HorizontalRow({
         )}
       </div>
 
-      <div className="relative group">
+      <div className="relative group/row">
         {/* Navigation Buttons (Desktop only) */}
         <button 
           onClick={() => scroll('left')}
-          className="absolute left-0 top-1/2 -translate-y-[calc(50%+24px)] -translate-x-4 z-10 w-10 h-10 bg-bg-elevated/80 backdrop-blur-sm border border-border-main text-text-main rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex hover:bg-bg-elevated hover:scale-105"
+          className="absolute left-0 top-1/2 -translate-y-[calc(50%+24px)] -translate-x-4 z-10 w-10 h-10 bg-bg-elevated/80 backdrop-blur-sm border border-border-main text-text-main rounded-full flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-opacity hidden md:flex hover:bg-bg-elevated hover:scale-105"
         >
           <ChevronLeft size={24} />
         </button>
@@ -65,7 +65,7 @@ export function HorizontalRow({
 
         <button 
           onClick={() => scroll('right')}
-          className="absolute right-0 top-1/2 -translate-y-[calc(50%+24px)] translate-x-4 z-10 w-10 h-10 bg-bg-elevated/80 backdrop-blur-sm border border-border-main text-text-main rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex hover:bg-bg-elevated hover:scale-105"
+          className="absolute right-0 top-1/2 -translate-y-[calc(50%+24px)] translate-x-4 z-10 w-10 h-10 bg-bg-elevated/80 backdrop-blur-sm border border-border-main text-text-main rounded-full flex items-center justify-center opacity-0 group-hover/row:opacity-100 transition-opacity hidden md:flex hover:bg-bg-elevated hover:scale-105"
         >
           <ChevronRight size={24} />
         </button>

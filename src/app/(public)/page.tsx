@@ -2,6 +2,8 @@ import { HorizontalRow } from "@/components/ui/horizontal-row";
 import { BookCarousel } from "@/components/ui/book-carousel";
 import { getHomeContentByType, getAllContent } from "@/lib/db";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   let sermonsPodcasts = await getHomeContentByType('sermon_podcast');
   let blogSeries = await getHomeContentByType('blog_series');
