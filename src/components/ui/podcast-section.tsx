@@ -6,7 +6,7 @@ import { FeaturedPodcastPlayer } from "./featured-podcast-player";
 import { Play } from "lucide-react";
 import Link from "next/link";
 
-export function PodcastSection({ podcasts, hideHeader = false }: { podcasts: ContentItem[], hideHeader?: boolean }) {
+export function PodcastSection({ podcasts, hideHeader = false, title = "PODCASTS" }: { podcasts: ContentItem[], hideHeader?: boolean, title?: string }) {
   const [selectedPodcast, setSelectedPodcast] = useState<ContentItem | null>(podcasts[0] || null);
 
   if (!podcasts || podcasts.length === 0) return null;
@@ -16,9 +16,9 @@ export function PodcastSection({ podcasts, hideHeader = false }: { podcasts: Con
       {!hideHeader && (
         <div className="flex items-center justify-between px-4 md:px-8 mb-6 w-full max-w-7xl mx-auto">
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a1715] dark:text-white tracking-wide uppercase">
-            VIDEOS & PODCASTS
+            {title}
           </h2>
-          <Link href="/podcasts" className="text-[#1a1715]/70 dark:text-white/70 hover:text-[#1a1715] dark:hover:text-white text-sm font-semibold transition-colors">
+          <Link href="/podcasts" className="text-[#1a1715]/70 dark:text-white/70 hover:text-[#1a1715] dark:hover:text-white text-sm font-semibold transition-colors hidden">
             See All
           </Link>
         </div>
