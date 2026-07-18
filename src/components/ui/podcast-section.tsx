@@ -40,7 +40,7 @@ export function PodcastSection({ podcasts, hideHeader = false, title = "PODCASTS
               onClick={() => setSelectedPodcast(podcast)}
               className={`flex items-start gap-4 p-4 rounded-xl cursor-pointer snap-start transition-all ${selectedPodcast?.id === podcast.id ? 'bg-[#1a1715]/5 dark:bg-white/10 ring-1 ring-[#1a1715]/10 dark:ring-white/20' : 'hover:bg-[#1a1715]/5 dark:hover:bg-white/5'}`}
             >
-              <div className="w-16 h-16 shrink-0 rounded overflow-hidden relative group bg-[#1a1715]/5 dark:bg-white/5 flex items-center justify-center">
+              <div className="w-28 shrink-0 aspect-video rounded overflow-hidden relative group bg-[#1a1715]/5 dark:bg-white/5 flex items-center justify-center">
                 {(podcast.imageUrl || (podcast.videoUrl && getYoutubeThumbnailUrl(podcast.videoUrl))) ? (
                   <img src={podcast.imageUrl || (podcast.videoUrl ? getYoutubeThumbnailUrl(podcast.videoUrl) : "")!} alt={podcast.title} className="w-full h-full object-cover" />
                 ) : (

@@ -106,19 +106,7 @@ export function FeaturedPodcastPlayer({ podcast, type = "PODCASTS" }: FeaturedPo
               Subscribe <ChevronDown size={14} />
             </button>
           </div>
-          <div className="w-48 h-48 md:w-56 md:h-56 shrink-0 rounded-sm overflow-hidden shadow-2xl border border-black/5 bg-[#1a1715]/5 dark:bg-white/5 relative">
-            <div className="absolute inset-0 z-0">
-              {(podcast.imageUrl || (podcast.videoUrl && getYoutubeThumbnailUrl(podcast.videoUrl))) ? (
-                <img 
-                  src={podcast.imageUrl || (podcast.videoUrl ? getYoutubeThumbnailUrl(podcast.videoUrl) : "")!} 
-                  alt={podcast.title}
-                  className="w-full h-full object-cover opacity-[0.15] scale-105"
-                />
-              ) : (
-                <div className="w-full h-full bg-[#1a1715]/40 opacity-[0.15]" />
-              )}
-              <div className="absolute inset-0 bg-gradient-to-r from-card-bg via-card-bg/95 to-transparent" />
-            </div>
+          <div className="w-72 md:w-96 aspect-video shrink-0 rounded-xl overflow-hidden shadow-2xl border border-black/5 bg-[#1a1715]/5 dark:bg-white/5 relative">
             {(podcast.imageUrl || (podcast.videoUrl && getYoutubeThumbnailUrl(podcast.videoUrl))) ? (
               <img src={podcast.imageUrl || (podcast.videoUrl ? getYoutubeThumbnailUrl(podcast.videoUrl) : "")!} alt={podcast.title} className="w-full h-full object-cover" />
             ) : (
