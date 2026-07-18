@@ -15,8 +15,8 @@ export function PodcastSection({ podcasts, hideHeader = false }: { podcasts: Con
     <div className="w-full flex flex-col pt-12">
       {!hideHeader && (
         <div className="flex items-center justify-between px-4 md:px-8 mb-6 w-full max-w-7xl mx-auto">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a1715] dark:text-white tracking-wide capitalize">
-            PODCASTS
+          <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a1715] dark:text-white tracking-wide uppercase">
+            VIDEOS & PODCASTS
           </h2>
           <Link href="/podcasts" className="text-[#1a1715]/70 dark:text-white/70 hover:text-[#1a1715] dark:hover:text-white text-sm font-semibold transition-colors">
             See All
@@ -28,7 +28,7 @@ export function PodcastSection({ podcasts, hideHeader = false }: { podcasts: Con
 
       <div className="px-4 md:px-8 py-12 w-full max-w-7xl mx-auto">
         <h3 className="font-serif italic tracking-wide text-sm text-[#1a1715]/50 dark:text-white/50 mb-6">
-          Recent Episodes
+          Recent Media
         </h3>
         
         <div className="grid grid-rows-1 md:grid-rows-2 grid-flow-col auto-cols-[85vw] sm:auto-cols-[300px] gap-x-6 gap-y-6 overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar scroll-smooth">
