@@ -133,7 +133,7 @@ export function BookCarousel({ items }: BookCarouselProps) {
       {modal && <BookModal item={modal.item} theme={modal.theme} onClose={() => setModal(null)} />}
 
       <div className="w-full flex flex-col items-center select-none overflow-hidden pb-10">
-        <div className="w-full mb-6 px-4 md:px-0 text-left flex items-center justify-between">
+        <div className="w-full max-w-7xl mx-auto mb-6 px-4 md:px-8 text-left flex items-center justify-between">
           <h2 className="font-serif text-3xl md:text-4xl font-bold tracking-wide text-[#1a1715] dark:text-white capitalize">
             BOOK REVIEWS
           </h2>

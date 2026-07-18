@@ -33,7 +33,7 @@ export default async function Home() {
   return (
     <div className="pb-8 w-full overflow-hidden">
       
-      <div className="space-y-12 mt-12 w-full">
+      <div className="space-y-24 mt-16 w-full">
         {sermons.length > 0 && (
           <div className="max-w-7xl mx-auto px-4 md:px-8 w-full">
             <HorizontalRow 
