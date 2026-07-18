@@ -2,14 +2,15 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Headphones, BookOpen, Calendar, Book, Search, Moon, Sun, User } from 'lucide-react';
+import { Home, Headphones, BookOpen, Calendar, Book, Search, Moon, Sun, User, PlaySquare } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useAuth } from '@/contexts/auth-context';
 import { MiniAudioPlayer } from './mini-audio-player';
 
 const navItems = [
   { label: 'Home', href: '/', icon: Home },
-  { label: 'Videos', href: '/videos-podcasts', icon: Headphones },
+  { label: 'Videos', href: '/videos-podcasts', icon: PlaySquare },
+  { label: 'Podcasts', href: '/podcasts', icon: Headphones },
   { label: 'Blogs', href: '/blog-series', icon: BookOpen },
   { label: 'Events', href: '/events', icon: Calendar },
   { label: 'Book Reviews', href: '/books-reviews', icon: Book },
