@@ -7,9 +7,10 @@ import Link from "next/link";
 
 interface FeaturedPodcastPlayerProps {
   podcast: ContentItem;
+  type?: string;
 }
 
-export function FeaturedPodcastPlayer({ podcast }: FeaturedPodcastPlayerProps) {
+export function FeaturedPodcastPlayer({ podcast, type = "PODCASTS" }: FeaturedPodcastPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -85,7 +86,7 @@ export function FeaturedPodcastPlayer({ podcast }: FeaturedPodcastPlayerProps) {
         <div className="flex flex-col md:flex-row gap-8 items-center md:items-start justify-center md:justify-end">
           <div className="flex flex-col items-center md:items-start">
             <p className="font-serif italic text-sm tracking-wide text-black/50 dark:text-white/50 mb-6 text-center md:text-left">
-              Featured Podcast
+              {type === "VIDEOS" ? "Featured Video" : "Featured Podcast"}
             </p>
             <h2 className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-[#1a1715] dark:text-white leading-tight text-center md:text-left mb-6">
               {podcast.author}
@@ -106,13 +107,13 @@ export function FeaturedPodcastPlayer({ podcast }: FeaturedPodcastPlayerProps) {
         {/* Right Column - Player */}
         <div className="flex flex-col">
           <p className="font-serif italic text-sm tracking-wide text-black/50 dark:text-white/50 mb-2">
-            Latest Episode
+            {type === "VIDEOS" ? "Latest Video" : "Latest Episode"}
           </p>
           <h3 className="font-serif font-bold text-3xl md:text-4xl text-[#1a1715] dark:text-white mb-4">
             {podcast.title}
           </h3>
           <p className="text-[#1a1715]/70 dark:text-white/70 text-sm md:text-base leading-relaxed mb-10 max-w-xl">
-            {podcast.description || "Listen to our latest featured podcast episode below."}
+            {podcast.description || `Listen to our latest featured ${type === "VIDEOS" ? "video" : "podcast"} below.`}
           </p>
 
           {/* Player UI */}

@@ -24,7 +24,7 @@ export function PodcastSection({ podcasts, hideHeader = false, title = "PODCASTS
         </div>
       )}
 
-      {selectedPodcast && <FeaturedPodcastPlayer podcast={selectedPodcast} />}
+      {selectedPodcast && <FeaturedPodcastPlayer podcast={selectedPodcast} type={title} />}
 
       <div className="px-4 md:px-8 py-12 w-full max-w-7xl mx-auto">
         <h3 className="font-serif italic tracking-wide text-sm text-[#1a1715]/50 dark:text-white/50 mb-6">
