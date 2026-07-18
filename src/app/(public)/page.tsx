@@ -31,43 +31,51 @@ export default async function Home() {
   const podcasts = [...sermonsPodcasts.filter(item => item.audioUrl), ...podcastsOnly];
 
   return (
-    <div className="pb-8">
+    <div className="pb-8 w-full overflow-hidden">
       
-      <div className="px-4 md:px-8 space-y-12 mt-12">
+      <div className="space-y-12 mt-12 w-full">
         {sermons.length > 0 && (
-          <HorizontalRow 
-            title="Videos" 
-            items={sermons} 
-            aspectRatio="video"
-            seeAllUrl="/videos-podcasts"
-          />
+          <div className="max-w-7xl mx-auto px-4 md:px-8 w-full">
+            <HorizontalRow 
+              title="Videos" 
+              items={sermons} 
+              aspectRatio="video"
+              seeAllUrl="/videos-podcasts"
+            />
+          </div>
         )}
 
         {podcasts.length > 0 && (
-          <HorizontalRow 
-            title="Podcasts" 
-            items={podcasts} 
-            aspectRatio="video"
-            seeAllUrl="/podcasts"
-          />
+          <div className="max-w-7xl mx-auto px-4 md:px-8 w-full">
+            <HorizontalRow 
+              title="Podcasts" 
+              items={podcasts} 
+              aspectRatio="video"
+              seeAllUrl="/podcasts"
+            />
+          </div>
         )}
 
         {blogSeries.length > 0 && (
-          <HorizontalRow 
-            title="Blog Series" 
-            items={blogSeries} 
-            aspectRatio="portrait"
-            seeAllUrl="/blog-series"
-          />
+          <div className="max-w-7xl mx-auto px-4 md:px-8 w-full">
+            <HorizontalRow 
+              title="Blog Series" 
+              items={blogSeries} 
+              aspectRatio="portrait"
+              seeAllUrl="/blog-series"
+            />
+          </div>
         )}
 
         {events.length > 0 && (
-          <HorizontalRow 
-            title="Upcoming Events" 
-            items={events} 
-            aspectRatio="square"
-            seeAllUrl="/events"
-          />
+          <div className="max-w-7xl mx-auto px-4 md:px-8 w-full">
+            <HorizontalRow 
+              title="Upcoming Events" 
+              items={events} 
+              aspectRatio="square"
+              seeAllUrl="/events"
+            />
+          </div>
         )}
 
         {booksReviews.length > 0 && (
@@ -77,7 +85,7 @@ export default async function Home() {
         )}
         
         {isEmpty && (
-          <div className="text-center text-text-muted py-20">
+          <div className="text-center text-text-muted py-20 max-w-7xl mx-auto px-4 md:px-8">
             <h3 className="text-xl font-serif text-text mb-4">Welcome to 3THIRTY⁺!</h3>
             <p className="mb-4">It looks like your Firebase database is empty.</p>
             <p>You can seed the dummy data by visiting <a href="/api/seed" target="_blank" className="text-accent hover:underline">/api/seed</a></p>
