@@ -33,7 +33,7 @@ export function PodcastSection({ podcasts, hideHeader = false, title = "PODCASTS
           Recent Media
         </h3>
         
-        <div className="grid grid-rows-1 md:grid-rows-2 grid-flow-col auto-cols-[85vw] sm:auto-cols-[300px] gap-x-6 gap-y-6 overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar scroll-smooth">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pb-8">
           {podcasts.map((podcast) => (
             <div 
               key={podcast.id}

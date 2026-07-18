@@ -94,7 +94,7 @@ export function VideoSection({ videos }: { videos: ContentItem[] }) {
           </button>
         </div>
         
-        <div className="grid grid-rows-1 md:grid-rows-2 grid-flow-col auto-cols-[85vw] sm:auto-cols-[300px] md:auto-cols-[280px] gap-x-6 gap-y-12 overflow-x-auto pb-8 snap-x snap-mandatory hide-scrollbar scroll-smooth">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10 pb-8">
           {videos.map((video) => (
             <div 
               key={video.id}
