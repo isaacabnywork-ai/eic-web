@@ -5,6 +5,7 @@ import { ContentItem } from "@/components/ui/content-card";
 import { FeaturedPodcastPlayer } from "./featured-podcast-player";
 import { Play } from "lucide-react";
 import Link from "next/link";
+import { getYoutubeThumbnailUrl } from "@/lib/youtube";
 
 export function PodcastSection({ podcasts, hideHeader = false, title = "PODCASTS" }: { podcasts: ContentItem[], hideHeader?: boolean, title?: string }) {
   const [selectedPodcast, setSelectedPodcast] = useState<ContentItem | null>(podcasts[0] || null);
@@ -39,8 +40,8 @@ export function PodcastSection({ podcasts, hideHeader = false, title = "PODCASTS
               className={`flex items-start gap-4 p-4 rounded-xl cursor-pointer snap-start transition-all ${selectedPodcast?.id === podcast.id ? 'bg-[#1a1715]/5 dark:bg-white/10 ring-1 ring-[#1a1715]/10 dark:ring-white/20' : 'hover:bg-[#1a1715]/5 dark:hover:bg-white/5'}`}
             >
               <div className="w-16 h-16 shrink-0 rounded overflow-hidden relative group bg-[#1a1715]/5 dark:bg-white/5 flex items-center justify-center">
-                {podcast.imageUrl ? (
-                  <img src={podcast.imageUrl} alt={podcast.title} className="w-full h-full object-cover" />
+                {(podcast.imageUrl || (podcast.videoUrl && getYoutubeThumbnailUrl(podcast.videoUrl))) ? (
+                  <img src={podcast.imageUrl || (podcast.videoUrl ? getYoutubeThumbnailUrl(podcast.videoUrl) : "")!} alt={podcast.title} className="w-full h-full object-cover" />
                 ) : (
                   <span className="text-[10px] font-serif text-[#1a1715]/20 dark:text-white/20">No Cover</span>
                 )}

@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { ContentItem } from "@/components/ui/content-card";
+import { getYoutubeThumbnailUrl } from "@/lib/youtube";
 import { Play, Pause, RotateCcw, RotateCw, Download, ChevronDown } from "lucide-react";
 import Link from "next/link";
 
@@ -95,9 +96,21 @@ export function FeaturedPodcastPlayer({ podcast, type = "PODCASTS" }: FeaturedPo
               Subscribe <ChevronDown size={14} />
             </button>
           </div>
-          <div className="w-48 h-48 md:w-56 md:h-56 shrink-0 rounded-sm overflow-hidden shadow-2xl border border-black/5 bg-[#1a1715]/5 dark:bg-white/5 flex items-center justify-center">
-            {podcast.imageUrl ? (
-              <img src={podcast.imageUrl} alt={podcast.title} className="w-full h-full object-cover" />
+          <div className="w-48 h-48 md:w-56 md:h-56 shrink-0 rounded-sm overflow-hidden shadow-2xl border border-black/5 bg-[#1a1715]/5 dark:bg-white/5 relative">
+            <div className="absolute inset-0 z-0">
+              {(podcast.imageUrl || (podcast.videoUrl && getYoutubeThumbnailUrl(podcast.videoUrl))) ? (
+                <img 
+                  src={podcast.imageUrl || (podcast.videoUrl ? getYoutubeThumbnailUrl(podcast.videoUrl) : "")!} 
+                  alt={podcast.title}
+                  className="w-full h-full object-cover opacity-[0.15] scale-105"
+                />
+              ) : (
+                <div className="w-full h-full bg-[#1a1715]/40 opacity-[0.15]" />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-r from-card-bg via-card-bg/95 to-transparent" />
+            </div>
+            {(podcast.imageUrl || (podcast.videoUrl && getYoutubeThumbnailUrl(podcast.videoUrl))) ? (
+              <img src={podcast.imageUrl || (podcast.videoUrl ? getYoutubeThumbnailUrl(podcast.videoUrl) : "")!} alt={podcast.title} className="w-full h-full object-cover" />
             ) : (
               <span className="text-xs font-serif text-[#1a1715]/20 dark:text-white/20">No Cover</span>
             )}

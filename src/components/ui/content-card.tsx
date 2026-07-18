@@ -3,6 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Play } from 'lucide-react';
 import { useAudioPlayer } from '@/contexts/audio-player-context';
+import { getYoutubeThumbnailUrl } from '@/lib/youtube';
 
 export type ContentItem = {
   id: string;
@@ -54,9 +55,9 @@ export function ContentCard({ item, aspectRatio = 'video', className = 'flex-shr
     <Link href={item.url} className={`group/card block relative ${className}`}>
       <div className={`relative overflow-hidden bg-card-bg ${aspectClasses[aspectRatio]}`}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        {item.imageUrl ? (
+        {(item.imageUrl || (item.videoUrl && getYoutubeThumbnailUrl(item.videoUrl))) ? (
           <img 
-            src={item.imageUrl} 
+            src={item.imageUrl || (item.videoUrl ? getYoutubeThumbnailUrl(item.videoUrl) : "")!} 
             alt={item.title} 
             className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105"
           />

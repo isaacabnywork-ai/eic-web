@@ -4,20 +4,7 @@ import React, { useState } from "react";
 import { ContentItem } from "@/components/ui/content-card";
 import { Play } from "lucide-react";
 
-function getYoutubeEmbedUrl(url: string) {
-  let videoId = "";
-  if (url.includes("youtu.be/")) {
-    videoId = url.split("youtu.be/")[1]?.split("?")[0];
-  } else if (url.includes("youtube.com/watch")) {
-    const parts = url.split("?");
-    if (parts.length > 1) {
-      videoId = new URLSearchParams(parts[1]).get("v") || "";
-    }
-  } else if (url.includes("youtube.com/embed/")) {
-    videoId = url.split("youtube.com/embed/")[1]?.split("?")[0];
-  }
-  return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1&playsinline=1&controls=1&rel=0` : url;
-}
+import { getYoutubeEmbedUrl, getYoutubeThumbnailUrl } from "@/lib/youtube";
 
 export function VideoSection({ videos }: { videos: ContentItem[] }) {
   const [selectedVideo, setSelectedVideo] = useState<ContentItem | null>(videos[0] || null);
@@ -51,9 +38,9 @@ export function VideoSection({ videos }: { videos: ContentItem[] }) {
             ) : (
               <div className="w-full h-full relative cursor-pointer" onClick={() => setIsPlaying(true)}>
                 {/* Cover Image */}
-                {selectedVideo.imageUrl ? (
+                {(selectedVideo.imageUrl || (selectedVideo.videoUrl && getYoutubeThumbnailUrl(selectedVideo.videoUrl))) ? (
                   <img 
-                    src={selectedVideo.imageUrl} 
+                    src={selectedVideo.imageUrl || (selectedVideo.videoUrl ? getYoutubeThumbnailUrl(selectedVideo.videoUrl) : "")!} 
                     alt={selectedVideo.title} 
                     className="w-full h-full object-cover opacity-60 group-hover:opacity-50 transition-opacity duration-500"
                   />
@@ -115,8 +102,8 @@ export function VideoSection({ videos }: { videos: ContentItem[] }) {
               className="group cursor-pointer flex flex-col snap-start"
             >
               <div className="w-full aspect-video rounded-xl overflow-hidden relative mb-4 bg-black/5 dark:bg-white/5">
-                {video.imageUrl ? (
-                  <img src={video.imageUrl} alt={video.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                {(video.imageUrl || (video.videoUrl && getYoutubeThumbnailUrl(video.videoUrl))) ? (
+                  <img src={video.imageUrl || (video.videoUrl ? getYoutubeThumbnailUrl(video.videoUrl) : "")!} alt={video.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 ) : (
                   <div className="w-full h-full flex items-center justify-center text-xs font-serif text-[#1a1715]/20 dark:text-white/20">No Cover</div>
                 )}
