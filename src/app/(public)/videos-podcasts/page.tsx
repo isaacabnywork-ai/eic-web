@@ -5,8 +5,8 @@ import { PodcastSection } from "@/components/ui/podcast-section";
 export default async function VideosPodcastsPage() {
   const allContent = await getAllContent('sermon_podcast');
 
-  const videos = allContent.filter(item => item.videoUrl);
-  const podcasts = allContent.filter(item => item.audioUrl);
+  const videos = allContent.filter(item => item.videoUrl).length > 0 ? allContent.filter(item => item.videoUrl) : allContent;
+  const podcasts = allContent.filter(item => item.audioUrl).length > 0 ? allContent.filter(item => item.audioUrl) : allContent;
 
   return (
     <div className="w-full bg-[#f8f7f5] dark:bg-[#1a1715] min-h-screen pb-20 transition-colors duration-300">
