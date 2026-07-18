@@ -1,4 +1,5 @@
 import { getAllContent } from "@/lib/db";
+import { VideoSection } from "@/components/ui/video-section";
 import { PodcastSection } from "@/components/ui/podcast-section";
 
 export default async function VideosPodcastsPage() {
@@ -10,9 +11,7 @@ export default async function VideosPodcastsPage() {
   return (
     <div className="w-full bg-[#f8f7f5] dark:bg-[#1a1715] min-h-screen pb-20 transition-colors duration-300">
       {videos.length > 0 && (
-        <div className="w-full pb-8">
-          <PodcastSection podcasts={videos} title="VIDEOS" />
-        </div>
+        <VideoSection videos={videos} />
       )}
 
       {podcasts.length > 0 && (
