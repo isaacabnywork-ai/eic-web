@@ -2,7 +2,11 @@ import { getAllContent } from "@/lib/db";
 import { PodcastSection } from "@/components/ui/podcast-section";
 
 export default async function PodcastsPage() {
-  const allContent = await getAllContent('sermon_podcast');
+  const sermonPodcasts = await getAllContent('sermon_podcast');
+  const podcastsOnly = await getAllContent('podcast');
+  
+  // Combine both old video-podcasts and new pure podcasts
+  const allContent = [...sermonPodcasts, ...podcastsOnly];
 
   // Fallback to all content if no audioUrl is found
   const podcasts = allContent.filter(item => item.audioUrl).length > 0 

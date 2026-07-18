@@ -20,7 +20,8 @@ export default async function AdminDashboardPage({ searchParams }: Props) {
     const getTypeLabel = (type: string) => {
       switch (type) {
         case 'banner': return 'Banners';
-        case 'sermon_podcast': return 'Videos & Podcasts';
+        case 'sermon_podcast': return 'Videos';
+        case 'podcast': return 'Podcasts';
         case 'blog_series': return 'Blog Posts';
         case 'event': return 'Events';
         case 'book_review': return 'Books & Reviews';
@@ -33,6 +34,7 @@ export default async function AdminDashboardPage({ searchParams }: Props) {
   // Calculate stats for Dashboard
   const bannersCount = items.filter(i => i.type === 'banner').length;
   const sermonsCount = items.filter(i => i.type === 'sermon_podcast').length;
+  const podcastsCount = items.filter(i => i.type === 'podcast').length;
   const blogsCount = items.filter(i => i.type === 'blog_series').length;
   const eventsCount = items.filter(i => i.type === 'event').length;
   const booksCount = items.filter(i => i.type === 'book_review').length;
@@ -70,6 +72,16 @@ export default async function AdminDashboardPage({ searchParams }: Props) {
               <div>
                 <div className="text-2xl font-serif font-bold text-[#1a1715]">{sermonsCount}</div>
                 <div className="text-xs text-black/40 font-medium uppercase tracking-wider">Videos</div>
+              </div>
+            </div>
+
+            <div className="bg-white p-6 rounded-xl border border-black/5 shadow-sm flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
+              <div className="w-10 h-10 rounded-lg bg-yellow-100 text-yellow-600 flex items-center justify-center shrink-0">
+                <Headphones size={20} />
+              </div>
+              <div>
+                <div className="text-2xl font-serif font-bold text-[#1a1715]">{podcastsCount}</div>
+                <div className="text-xs text-black/40 font-medium uppercase tracking-wider">Podcasts</div>
               </div>
             </div>
             

@@ -4,7 +4,7 @@ import React, { useEffect, useState, Suspense } from "react";
 import { useAuth } from "@/contexts/auth-context";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Settings, FileText, ArrowLeft, Loader2, LayoutDashboard, Headphones, BookOpen, Calendar, Book, LogOut, ExternalLink, Sliders, Image } from "lucide-react";
+import { Settings, FileText, ArrowLeft, Loader2, LayoutDashboard, Headphones, BookOpen, Calendar, Book, LogOut, ExternalLink, Sliders, Image, PlaySquare } from "lucide-react";
 
 const NavItem = ({ href, icon: Icon, label, isActive }: { href: string, icon: React.ElementType, label: string, isActive: boolean }) => (
   <Link 
@@ -37,7 +37,8 @@ function AdminSidebar({ logout, router }: { logout: () => void, router: any }) {
             <NavItem href="/admin" icon={LayoutDashboard} label="Dashboard" isActive={typeof window !== 'undefined' && window.location.pathname === '/admin' && !currentType} />
             <NavItem href="/admin/main-page" icon={Sliders} label="Main Page Content" isActive={typeof window !== 'undefined' && window.location.pathname.includes('/admin/main-page')} />
             <NavItem href="/admin?type=banner" icon={Image} label="Banners" isActive={currentType === 'banner'} />
-            <NavItem href="/admin?type=sermon_podcast" icon={Headphones} label="Videos" isActive={currentType === 'sermon_podcast'} />
+            <NavItem href="/admin?type=sermon_podcast" icon={PlaySquare} label="Videos" isActive={currentType === 'sermon_podcast'} />
+            <NavItem href="/admin?type=podcast" icon={Headphones} label="Podcasts" isActive={currentType === 'podcast'} />
             <NavItem href="/admin?type=blog_series" icon={BookOpen} label="Blog Posts" isActive={currentType === 'blog_series'} />
             <NavItem href="/admin?type=event" icon={Calendar} label="Events" isActive={currentType === 'event'} />
             <NavItem href="/admin?type=book_review" icon={Book} label="Books" isActive={currentType === 'book_review'} />

@@ -14,7 +14,7 @@ export async function getFeaturedContent(): Promise<ContentItem[]> {
   return items;
 }
 
-export async function getContentByType(type: 'sermon_podcast' | 'blog_series' | 'event' | 'book_review' | 'banner'): Promise<ContentItem[]> {
+export async function getContentByType(type: 'sermon_podcast' | 'podcast' | 'blog_series' | 'event' | 'book_review' | 'banner'): Promise<ContentItem[]> {
   const q = query(
     collection(db, "content"), 
     where("type", "==", type),
@@ -30,7 +30,7 @@ export async function getContentByType(type: 'sermon_podcast' | 'blog_series' | 
   return items;
 }
 
-export async function getHomeContentByType(type: 'sermon_podcast' | 'blog_series' | 'event' | 'book_review' | 'banner'): Promise<ContentItem[]> {
+export async function getHomeContentByType(type: 'sermon_podcast' | 'podcast' | 'blog_series' | 'event' | 'book_review' | 'banner'): Promise<ContentItem[]> {
   const q = query(
     collection(db, "content"), 
     where("type", "==", type),
@@ -46,7 +46,7 @@ export async function getHomeContentByType(type: 'sermon_podcast' | 'blog_series
   return items;
 }
 
-export async function getAllContent(type: 'sermon_podcast' | 'blog_series' | 'event' | 'book_review' | 'banner'): Promise<ContentItem[]> {
+export async function getAllContent(type: 'sermon_podcast' | 'podcast' | 'blog_series' | 'event' | 'book_review' | 'banner'): Promise<ContentItem[]> {
   const q = query(
     collection(db, "content"), 
     where("type", "==", type)
@@ -73,7 +73,7 @@ export async function getAllContentItems(): Promise<ContentItem[]> {
   return items;
 }
 
-export async function getContentBySlug(type: 'sermon_podcast' | 'blog_series' | 'event' | 'book_review' | 'banner', slug: string, routePrefix?: string): Promise<ContentItem | null> {
+export async function getContentBySlug(type: 'sermon_podcast' | 'podcast' | 'blog_series' | 'event' | 'book_review' | 'banner', slug: string, routePrefix?: string): Promise<ContentItem | null> {
   const urlToMatch = routePrefix ? `/${routePrefix}/${slug}` : `/${type}s/${slug}`;
   const q = query(
     collection(db, "content"), 

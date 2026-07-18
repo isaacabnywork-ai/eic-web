@@ -50,6 +50,7 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
       // We mapped types: sermon_podcast -> videos-podcasts, blog_series -> blog-series
       let routeName = urlBase;
       if (formData.type === 'sermon_podcast') routeName = 'videos-podcasts';
+      if (formData.type === 'podcast') routeName = 'podcasts';
       if (formData.type === 'book_review') routeName = 'books-reviews';
       if (formData.type === 'event') routeName = 'events';
 
@@ -125,7 +126,8 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
             onChange={handleChange}
             className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] shadow-sm"
           >
-            <option value="sermon_podcast">Video & Podcast</option>
+            <option value="sermon_podcast">Video</option>
+            <option value="podcast">Podcast</option>
             <option value="blog_series">Blog Series</option>
             <option value="event">Event</option>
             <option value="book_review">Book Review</option>
