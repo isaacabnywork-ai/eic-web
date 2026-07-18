@@ -6,6 +6,7 @@ import { FeaturedPodcastPlayer } from "./featured-podcast-player";
 import { Play } from "lucide-react";
 import Link from "next/link";
 import { getYoutubeThumbnailUrl } from "@/lib/youtube";
+import { Headphones } from "lucide-react";
 
 export function PodcastSection({ podcasts, hideHeader = false, title = "PODCASTS" }: { podcasts: ContentItem[], hideHeader?: boolean, title?: string }) {
   const [selectedPodcast, setSelectedPodcast] = useState<ContentItem | null>(podcasts[0] || null);
@@ -43,7 +44,9 @@ export function PodcastSection({ podcasts, hideHeader = false, title = "PODCASTS
                 {(podcast.imageUrl || (podcast.videoUrl && getYoutubeThumbnailUrl(podcast.videoUrl))) ? (
                   <img src={podcast.imageUrl || (podcast.videoUrl ? getYoutubeThumbnailUrl(podcast.videoUrl) : "")!} alt={podcast.title} className="w-full h-full object-cover" />
                 ) : (
-                  <span className="text-[10px] font-serif text-[#1a1715]/20 dark:text-white/20">No Cover</span>
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[#1a1715]/10 to-[#1a1715]/30 dark:from-white/10 dark:to-white/5">
+                    <Headphones size={24} className="text-[#1a1715]/40 dark:text-white/40 opacity-50" />
+                  </div>
                 )}
                 <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity ${selectedPodcast?.id === podcast.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
                   <Play size={16} fill="currentColor" className="text-white ml-0.5" />

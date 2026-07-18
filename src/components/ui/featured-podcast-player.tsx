@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ContentItem } from "@/components/ui/content-card";
 import { getYoutubeThumbnailUrl } from "@/lib/youtube";
-import { Play, Pause, RotateCcw, RotateCw, Download, ChevronDown } from "lucide-react";
+import { Play, Pause, RotateCcw, RotateCw, Download, ChevronDown, Headphones } from "lucide-react";
 import Link from "next/link";
 
 interface FeaturedPodcastPlayerProps {
@@ -30,10 +30,20 @@ export function FeaturedPodcastPlayer({ podcast, type = "PODCASTS" }: FeaturedPo
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
+        setIsPlaying(false);
       } else {
-        audioRef.current.play();
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            setIsPlaying(true);
+          }).catch(error => {
+            console.error("Playback prevented:", error);
+            setIsPlaying(false);
+          });
+        } else {
+          setIsPlaying(true);
+        }
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
@@ -112,7 +122,10 @@ export function FeaturedPodcastPlayer({ podcast, type = "PODCASTS" }: FeaturedPo
             {(podcast.imageUrl || (podcast.videoUrl && getYoutubeThumbnailUrl(podcast.videoUrl))) ? (
               <img src={podcast.imageUrl || (podcast.videoUrl ? getYoutubeThumbnailUrl(podcast.videoUrl) : "")!} alt={podcast.title} className="w-full h-full object-cover" />
             ) : (
-              <span className="text-xs font-serif text-[#1a1715]/20 dark:text-white/20">No Cover</span>
+              <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#1a1715]/10 to-[#1a1715]/30 dark:from-white/10 dark:to-white/5 p-4 text-center">
+                <Headphones size={48} className="text-[#1a1715]/40 dark:text-white/40 mb-3 opacity-50" />
+                <span className="text-xs font-bold uppercase tracking-wider text-[#1a1715]/60 dark:text-white/60 line-clamp-3">{podcast.title}</span>
+              </div>
             )}
           </div>
         </div>
