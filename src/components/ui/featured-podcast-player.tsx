@@ -94,8 +94,12 @@ export function FeaturedPodcastPlayer({ podcast }: FeaturedPodcastPlayerProps) {
               Subscribe <ChevronDown size={14} />
             </button>
           </div>
-          <div className="w-48 h-48 md:w-56 md:h-56 shrink-0 rounded-sm overflow-hidden shadow-2xl border border-black/5">
-            <img src={podcast.imageUrl} alt={podcast.title} className="w-full h-full object-cover" />
+          <div className="w-48 h-48 md:w-56 md:h-56 shrink-0 rounded-sm overflow-hidden shadow-2xl border border-black/5 bg-[#1a1715]/5 dark:bg-white/5 flex items-center justify-center">
+            {podcast.imageUrl ? (
+              <img src={podcast.imageUrl} alt={podcast.title} className="w-full h-full object-cover" />
+            ) : (
+              <span className="text-xs font-serif text-[#1a1715]/20 dark:text-white/20">No Cover</span>
+            )}
           </div>
         </div>
 
@@ -115,7 +119,7 @@ export function FeaturedPodcastPlayer({ podcast }: FeaturedPodcastPlayerProps) {
           <div className="w-full">
             <audio 
               ref={audioRef} 
-              src={podcast.audioUrl} 
+              src={podcast.audioUrl || undefined} 
               onTimeUpdate={handleTimeUpdate}
               onEnded={() => setIsPlaying(false)}
             />

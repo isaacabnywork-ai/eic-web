@@ -38,8 +38,12 @@ export function PodcastSection({ podcasts, hideHeader = false, title = "PODCASTS
               onClick={() => setSelectedPodcast(podcast)}
               className={`flex items-start gap-4 p-4 rounded-xl cursor-pointer snap-start transition-all ${selectedPodcast?.id === podcast.id ? 'bg-[#1a1715]/5 dark:bg-white/10 ring-1 ring-[#1a1715]/10 dark:ring-white/20' : 'hover:bg-[#1a1715]/5 dark:hover:bg-white/5'}`}
             >
-              <div className="w-16 h-16 shrink-0 rounded overflow-hidden relative group">
-                <img src={podcast.imageUrl} alt={podcast.title} className="w-full h-full object-cover" />
+              <div className="w-16 h-16 shrink-0 rounded overflow-hidden relative group bg-[#1a1715]/5 dark:bg-white/5 flex items-center justify-center">
+                {podcast.imageUrl ? (
+                  <img src={podcast.imageUrl} alt={podcast.title} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-[10px] font-serif text-[#1a1715]/20 dark:text-white/20">No Cover</span>
+                )}
                 <div className={`absolute inset-0 bg-black/40 flex items-center justify-center transition-opacity ${selectedPodcast?.id === podcast.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
                   <Play size={16} fill="currentColor" className="text-white ml-0.5" />
                 </div>
