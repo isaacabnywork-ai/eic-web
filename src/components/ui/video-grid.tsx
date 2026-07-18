@@ -28,7 +28,7 @@ export function VideoGrid({ items, hideHeader = false }: VideoGridProps) {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 md:gap-8">
         {items.map((item) => (
-          <Link href={`/videos-podcasts/${item.slug || item.id}`} key={item.id} className="group block">
+          <Link href={`/videos-podcasts/${item.id}`} key={item.id} className="group block">
             <div className="w-full aspect-square relative overflow-hidden bg-white/5 rounded-md mb-4 shadow-lg">
               <img 
                 src={item.imageUrl} 
