@@ -6,18 +6,21 @@ export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   let sermonsPodcasts = await getHomeContentByType('sermon_podcast');
+  let podcastsOnly = await getHomeContentByType('podcast');
   let blogSeries = await getHomeContentByType('blog_series');
   let events = await getHomeContentByType('event');
   let booksReviews = await getHomeContentByType('book_review');
 
   const isCurationEmpty = 
     sermonsPodcasts.length === 0 && 
+    podcastsOnly.length === 0 &&
     blogSeries.length === 0 && 
     events.length === 0 && 
     booksReviews.length === 0;
 
   if (isCurationEmpty) {
     sermonsPodcasts = await getAllContent('sermon_podcast');
+    podcastsOnly = await getAllContent('podcast');
     blogSeries = await getAllContent('blog_series');
     events = await getAllContent('event');
     booksReviews = await getAllContent('book_review');
@@ -25,12 +28,13 @@ export default async function Home() {
 
   const isEmpty = 
     sermonsPodcasts.length === 0 && 
+    podcastsOnly.length === 0 &&
     blogSeries.length === 0 && 
     events.length === 0 && 
     booksReviews.length === 0;
 
-  const sermons = sermonsPodcasts.filter(item => item.videoUrl);
-  const podcasts = sermonsPodcasts.filter(item => item.audioUrl);
+  const sermons = sermonsPodcasts; // All 'sermon_podcast' types are now just Videos
+  const podcasts = [...sermonsPodcasts.filter(item => item.audioUrl), ...podcastsOnly];
 
   return (
     <div className="pb-8">
@@ -49,8 +53,8 @@ export default async function Home() {
           <HorizontalRow 
             title="Podcasts" 
             items={podcasts} 
-            aspectRatio="square"
-            seeAllUrl="/videos-podcasts"
+            aspectRatio="video"
+            seeAllUrl="/podcasts"
           />
         )}
 
