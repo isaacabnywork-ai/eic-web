@@ -1,5 +1,6 @@
 import { getAllContent } from "@/lib/db";
 import { PodcastSection } from "@/components/ui/podcast-section";
+export const dynamic = 'force-dynamic';
 
 export default async function PodcastsPage() {
   const sermonPodcasts = await getAllContent('sermon_podcast');

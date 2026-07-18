@@ -1,5 +1,6 @@
 import { getAllContent } from "@/lib/db";
 import { BlogFilter } from "@/components/ui/blog-filter";
+export const dynamic = 'force-dynamic';
 
 export default async function BlogSeriesPage() {
   const articles = await getAllContent('blog_series');

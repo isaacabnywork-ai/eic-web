@@ -1,5 +1,6 @@
 import { getAllContent } from "@/lib/db";
 import { BooksReviewsGrid } from "@/components/ui/books-reviews-grid";
+export const dynamic = 'force-dynamic';
 
 export default async function BooksReviewsPage() {
   const articles = await getAllContent('book_review');

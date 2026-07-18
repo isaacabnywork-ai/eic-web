@@ -1,5 +1,6 @@
 import { getAllContent } from "@/lib/db";
 import { EventCard } from "@/components/ui/event-card";
+export const dynamic = 'force-dynamic';
 
 export default async function EventsPage() {
   const events = await getAllContent('event');
