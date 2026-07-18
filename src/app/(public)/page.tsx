@@ -6,25 +6,19 @@ export const dynamic = 'force-dynamic';
 
 export default async function Home() {
   let sermonsPodcasts = await getHomeContentByType('sermon_podcast');
+  if (sermonsPodcasts.length === 0) sermonsPodcasts = await getAllContent('sermon_podcast');
+
   let podcastsOnly = await getHomeContentByType('podcast');
+  if (podcastsOnly.length === 0) podcastsOnly = await getAllContent('podcast');
+
   let blogSeries = await getHomeContentByType('blog_series');
+  if (blogSeries.length === 0) blogSeries = await getAllContent('blog_series');
+
   let events = await getHomeContentByType('event');
+  if (events.length === 0) events = await getAllContent('event');
+
   let booksReviews = await getHomeContentByType('book_review');
-
-  const isCurationEmpty = 
-    sermonsPodcasts.length === 0 && 
-    podcastsOnly.length === 0 &&
-    blogSeries.length === 0 && 
-    events.length === 0 && 
-    booksReviews.length === 0;
-
-  if (isCurationEmpty) {
-    sermonsPodcasts = await getAllContent('sermon_podcast');
-    podcastsOnly = await getAllContent('podcast');
-    blogSeries = await getAllContent('blog_series');
-    events = await getAllContent('event');
-    booksReviews = await getAllContent('book_review');
-  }
+  if (booksReviews.length === 0) booksReviews = await getAllContent('book_review');
 
   const isEmpty = 
     sermonsPodcasts.length === 0 && 
