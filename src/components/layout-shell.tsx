@@ -9,7 +9,7 @@ import { MiniAudioPlayer } from './mini-audio-player';
 
 const navItems = [
   { label: 'Home', href: '/', icon: Home },
-  { label: 'Sermons', href: '/sermons-podcasts', icon: Headphones },
+  { label: 'Videos', href: '/videos-podcasts', icon: Headphones },
   { label: 'Blogs', href: '/blog-series', icon: BookOpen },
   { label: 'Events', href: '/events', icon: Calendar },
   { label: 'Book Reviews', href: '/books-reviews', icon: Book },
@@ -48,7 +48,7 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
             )}
           </div>
           
-          <Link href="/" className="font-serif text-2xl font-bold tracking-widest text-white pointer-events-auto">EIC</Link>
+          <Link href="/" className="font-serif text-2xl font-bold tracking-widest text-white pointer-events-auto">330+</Link>
           
           <div className="flex-1 flex justify-end">
             <button className="pointer-events-auto cursor-pointer p-2 -mr-2">

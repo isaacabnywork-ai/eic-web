@@ -77,7 +77,7 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
               <Users className="text-text-muted mt-1 shrink-0" size={24} />
               <div>
                 <h3 className="font-bold text-text-main text-sm tracking-widest uppercase mb-1">Organizer</h3>
-                <p className="text-text-muted mb-4">{event.organizer || 'EIC'}</p>
+                <p className="text-text-muted mb-4">{event.organizer || '330+'}</p>
                 
                 {/* Organizer Socials */}
                 <div className="flex gap-2">

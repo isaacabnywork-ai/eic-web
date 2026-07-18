@@ -1,18 +1,18 @@
 import { getAllContent } from "@/lib/db";
-import { SermonSection } from "@/components/ui/sermon-section";
+import { VideoSection } from "@/components/ui/video-section";
 import { PodcastSection } from "@/components/ui/podcast-section";
 
-export default async function SermonsPodcastsPage() {
+export default async function VideosPodcastsPage() {
   const allContent = await getAllContent('sermon_podcast');
 
-  const sermons = allContent.filter(item => item.videoUrl);
+  const videos = allContent.filter(item => item.videoUrl);
   const podcasts = allContent.filter(item => item.audioUrl);
 
   return (
     <div className="w-full bg-[#f8f7f5] dark:bg-[#1a1715] min-h-screen pb-20 transition-colors duration-300">
-      {/* SERMONS SECTION */}
-      {sermons.length > 0 && (
-        <SermonSection sermons={sermons} />
+      {/* VIDEOS SECTION */}
+      {videos.length > 0 && (
+        <VideoSection videos={videos} />
       )}
 
       {/* PODCASTS SECTION */}

@@ -4,7 +4,7 @@ import { Play, Pause } from 'lucide-react';
 import { useAudioPlayer } from '@/contexts/audio-player-context';
 import { ContentItem } from '@/components/ui/content-card';
 
-export function SermonPlayButton({ item }: { item: ContentItem }) {
+export function VideoPlayButton({ item }: { item: ContentItem }) {
   const { currentTrack, isPlaying, playTrack, togglePlayPause } = useAudioPlayer();
 
   const isCurrentTrack = currentTrack?.id === item.id;
@@ -33,7 +33,7 @@ export function SermonPlayButton({ item }: { item: ContentItem }) {
       {isCurrentTrack && isPlaying ? (
         <>
           <Pause size={20} fill="currentColor" />
-          <span>Pause Sermon</span>
+          <span>Pause Audio</span>
         </>
       ) : (
         <>

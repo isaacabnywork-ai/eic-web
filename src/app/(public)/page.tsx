@@ -38,10 +38,10 @@ export default async function Home() {
       <div className="px-4 md:px-8 space-y-12 mt-12">
         {sermons.length > 0 && (
           <HorizontalRow 
-            title="Sermons" 
+            title="Videos" 
             items={sermons} 
             aspectRatio="video"
-            seeAllUrl="/sermons-podcasts"
+            seeAllUrl="/videos-podcasts"
           />
         )}
 
@@ -50,7 +50,7 @@ export default async function Home() {
             title="Podcasts" 
             items={podcasts} 
             aspectRatio="square"
-            seeAllUrl="/sermons-podcasts"
+            seeAllUrl="/videos-podcasts"
           />
         )}
 
@@ -80,7 +80,7 @@ export default async function Home() {
         
         {isEmpty && (
           <div className="text-center text-text-muted py-20">
-            <h3 className="text-xl font-serif text-text mb-4">Welcome to EIC!</h3>
+            <h3 className="text-xl font-serif text-text mb-4">Welcome to 330+!</h3>
             <p className="mb-4">It looks like your Firebase database is empty.</p>
             <p>You can seed the dummy data by visiting <a href="/api/seed" target="_blank" className="text-accent hover:underline">/api/seed</a></p>
           </div>

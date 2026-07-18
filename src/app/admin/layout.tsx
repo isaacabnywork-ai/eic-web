@@ -27,7 +27,7 @@ function AdminSidebar({ logout, router }: { logout: () => void, router: any }) {
   return (
     <aside className="w-64 bg-[#1a1715] border-r border-black/10 flex flex-col hidden md:flex text-white h-full shadow-2xl z-20">
       <div className="p-6">
-        <h2 className="font-serif text-2xl text-white tracking-widest">EIC</h2>
+        <h2 className="font-serif text-2xl text-white tracking-widest">330+</h2>
       </div>
       
       <div className="flex-1 px-4 py-2 space-y-6 overflow-y-auto">
@@ -37,7 +37,7 @@ function AdminSidebar({ logout, router }: { logout: () => void, router: any }) {
             <NavItem href="/admin" icon={LayoutDashboard} label="Dashboard" isActive={typeof window !== 'undefined' && window.location.pathname === '/admin' && !currentType} />
             <NavItem href="/admin/main-page" icon={Sliders} label="Main Page Content" isActive={typeof window !== 'undefined' && window.location.pathname.includes('/admin/main-page')} />
             <NavItem href="/admin?type=banner" icon={Image} label="Banners" isActive={currentType === 'banner'} />
-            <NavItem href="/admin?type=sermon_podcast" icon={Headphones} label="Sermons" isActive={currentType === 'sermon_podcast'} />
+            <NavItem href="/admin?type=sermon_podcast" icon={Headphones} label="Videos" isActive={currentType === 'sermon_podcast'} />
             <NavItem href="/admin?type=blog_series" icon={BookOpen} label="Blog Posts" isActive={currentType === 'blog_series'} />
             <NavItem href="/admin?type=event" icon={Calendar} label="Events" isActive={currentType === 'event'} />
             <NavItem href="/admin?type=book_review" icon={Book} label="Books" isActive={currentType === 'book_review'} />

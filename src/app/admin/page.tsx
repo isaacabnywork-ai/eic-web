@@ -20,7 +20,7 @@ export default async function AdminDashboardPage({ searchParams }: Props) {
     const getTypeLabel = (type: string) => {
       switch (type) {
         case 'banner': return 'Banners';
-        case 'sermon_podcast': return 'Sermons & Podcasts';
+        case 'sermon_podcast': return 'Videos & Podcasts';
         case 'blog_series': return 'Blog Posts';
         case 'event': return 'Events';
         case 'book_review': return 'Books & Reviews';
@@ -45,7 +45,7 @@ export default async function AdminDashboardPage({ searchParams }: Props) {
         <h1 className="font-sans font-black tracking-tighter uppercase text-2xl md:text-3xl text-[#1a1715]">{pageTitle}</h1>
         <div className="flex items-center gap-2 px-3 py-1.5 bg-black/5 rounded-full">
           <div className="w-2 h-2 rounded-full bg-black/40"></div>
-          <span className="text-xs font-medium text-black/60">admin@eic.com</span>
+          <span className="text-xs font-medium text-black/60">admin@330plus.com</span>
         </div>
       </div>
       
@@ -69,7 +69,7 @@ export default async function AdminDashboardPage({ searchParams }: Props) {
               </div>
               <div>
                 <div className="text-2xl font-serif font-bold text-[#1a1715]">{sermonsCount}</div>
-                <div className="text-xs text-black/40 font-medium uppercase tracking-wider">Sermons</div>
+                <div className="text-xs text-black/40 font-medium uppercase tracking-wider">Videos</div>
               </div>
             </div>
             
@@ -106,7 +106,7 @@ export default async function AdminDashboardPage({ searchParams }: Props) {
 
           <div className="bg-white p-6 rounded-xl border border-black/5 shadow-sm">
             <p className="text-sm text-black/60">
-              👋 Welcome to <strong className="text-[#1a1715]">EIC Admin</strong>. Use the sidebar to manage your content. <br/>
+              👋 Welcome to <strong className="text-[#1a1715]">330+ Admin</strong>. Use the sidebar to manage your content. <br/>
               All changes save to Firestore instantly and appear on the <span className="text-[#b47539] font-medium">live site</span> in real-time — no refresh needed.
             </p>
           </div>

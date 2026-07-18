@@ -47,7 +47,7 @@ export function ContentTable({ initialItems, type, contentType }: { initialItems
   };
 
   const getAddButtonText = () => {
-    if (type.includes('Sermon')) return '+ Add Sermon';
+    if (type.includes('Video')) return '+ Add Video';
     if (type.includes('Blog')) return '+ Add Post';
     if (type.includes('Event')) return '+ Add Event';
     if (type.includes('Book')) return '+ Add Book';

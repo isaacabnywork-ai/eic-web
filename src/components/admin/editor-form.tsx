@@ -46,10 +46,10 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
       // Auto-generate URL based on type and title slug
       const slug = formData.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
       const urlBase = formData.type.replace('_', '-');
-      // For routing we used sermons-podcasts, blog-series, books-reviews. 
-      // We mapped types: sermon_podcast -> sermons-podcasts, blog_series -> blog-series
+      // For routing we used videos-podcasts, blog-series, books-reviews. 
+      // We mapped types: sermon_podcast -> videos-podcasts, blog_series -> blog-series
       let routeName = urlBase;
-      if (formData.type === 'sermon_podcast') routeName = 'sermons-podcasts';
+      if (formData.type === 'sermon_podcast') routeName = 'videos-podcasts';
       if (formData.type === 'book_review') routeName = 'books-reviews';
       if (formData.type === 'event') routeName = 'events';
 
@@ -125,7 +125,7 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
             onChange={handleChange}
             className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] shadow-sm"
           >
-            <option value="sermon_podcast">Sermon & Podcast</option>
+            <option value="sermon_podcast">Video & Podcast</option>
             <option value="blog_series">Blog Series</option>
             <option value="event">Event</option>
             <option value="book_review">Book Review</option>
@@ -155,7 +155,7 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
               value={formData.customUrl}
               onChange={handleChange}
               className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 shadow-sm"
-              placeholder="e.g., /sermons-podcasts/some-sermon"
+              placeholder="e.g., /videos-podcasts/some-video"
             />
           </div>
         )}
@@ -224,7 +224,7 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
               value={formData.organizer}
               onChange={handleChange}
               className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 shadow-sm"
-              placeholder="e.g., EIC or Hope Church"
+              placeholder="e.g., 330+ or Community Center"
             />
           </div>
         </div>

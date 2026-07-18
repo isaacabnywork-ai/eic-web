@@ -5,12 +5,12 @@ import { ContentItem } from "@/components/ui/content-card";
 import Link from "next/link";
 import { Play } from "lucide-react";
 
-interface SermonGridProps {
+interface VideoGridProps {
   items: ContentItem[];
   hideHeader?: boolean;
 }
 
-export function SermonGrid({ items, hideHeader = false }: SermonGridProps) {
+export function VideoGrid({ items, hideHeader = false }: VideoGridProps) {
   if (!items || items.length === 0) return null;
 
   return (
@@ -18,9 +18,9 @@ export function SermonGrid({ items, hideHeader = false }: SermonGridProps) {
       {!hideHeader && (
         <div className="flex items-center justify-between mb-8">
           <h2 className="font-serif text-3xl md:text-4xl font-bold text-[#1a1715] dark:text-white tracking-wide capitalize">
-            SERMONS
+            VIDEOS
           </h2>
-          <Link href="/sermons" className="text-[#1a1715]/70 dark:text-white/70 hover:text-[#1a1715] dark:hover:text-white text-sm font-semibold transition-colors">
+          <Link href="/videos-podcasts" className="text-[#1a1715]/70 dark:text-white/70 hover:text-[#1a1715] dark:hover:text-white text-sm font-semibold transition-colors">
             See All
           </Link>
         </div>
@@ -28,7 +28,7 @@ export function SermonGrid({ items, hideHeader = false }: SermonGridProps) {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 md:gap-8">
         {items.map((item) => (
-          <Link href={`/sermons/${item.id}`} key={item.id} className="group block">
+          <Link href={`/videos-podcasts/${item.slug || item.id}`} key={item.id} className="group block">
             <div className="w-full aspect-square relative overflow-hidden bg-white/5 rounded-md mb-4 shadow-lg">
               <img 
                 src={item.imageUrl} 
