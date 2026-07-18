@@ -47,33 +47,35 @@ export function HeroCarousel({ items }: { items: ContentItem[] }) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent md:from-black/80 md:via-black/20 md:bg-gradient-to-r md:to-transparent" />
           
-          <div className="absolute bottom-8 md:bottom-12 left-0 p-6 md:p-12 w-full md:w-2/3">
-            <span className="font-serif italic text-sm tracking-wide text-accent mb-2 block">
-              {item.type === 'sermon_podcast' ? 'New Sermon' : item.type.replace('_', ' ')}
-            </span>
-            <h2 className="font-serif font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl text-white leading-tight mb-4 drop-shadow-lg">
-              {item.title}
-            </h2>
-            <p className="text-gray-300 md:text-lg mb-6 line-clamp-2">
-              By {item.author}
-            </p>
-            
-            <div className="flex gap-4">
-              {item.audioUrl && (
-                <button 
-                  onClick={(e) => handlePlay(e, item)}
-                  className="bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-full font-semibold flex items-center gap-2 transition-transform hover:scale-105"
+          <div className="absolute inset-0 max-w-7xl mx-auto flex items-end pb-8 md:pb-12 px-4 md:px-8 pointer-events-none">
+            <div className="w-full md:w-2/3 pointer-events-auto">
+              <span className="font-serif italic text-sm tracking-wide text-accent mb-2 block">
+                {item.type === 'sermon_podcast' ? 'New Sermon' : item.type.replace('_', ' ')}
+              </span>
+              <h2 className="font-serif font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl text-white leading-tight mb-4 drop-shadow-lg">
+                {item.title}
+              </h2>
+              <p className="text-gray-300 md:text-lg mb-6 line-clamp-2">
+                By {item.author}
+              </p>
+              
+              <div className="flex gap-4">
+                {item.audioUrl && (
+                  <button 
+                    onClick={(e) => handlePlay(e, item)}
+                    className="bg-accent hover:bg-accent/90 text-white px-6 py-3 rounded-full font-semibold flex items-center gap-2 transition-transform hover:scale-105"
+                  >
+                    <Play size={20} fill="currentColor" />
+                    Listen Now
+                  </button>
+                )}
+                <Link 
+                  href={item.url}
+                  className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white px-6 py-3 rounded-full font-semibold transition-colors"
                 >
-                  <Play size={20} fill="currentColor" />
-                  Listen Now
-                </button>
-              )}
-              <Link 
-                href={item.url}
-                className="bg-white/20 hover:bg-white/30 backdrop-blur-md text-white px-6 py-3 rounded-full font-semibold transition-colors"
-              >
-                More Info
-              </Link>
+                  More Info
+                </Link>
+              </div>
             </div>
           </div>
         </div>
