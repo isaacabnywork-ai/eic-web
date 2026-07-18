@@ -51,11 +51,15 @@ export function VideoSection({ videos }: { videos: ContentItem[] }) {
             ) : (
               <div className="w-full h-full relative cursor-pointer" onClick={() => setIsPlaying(true)}>
                 {/* Cover Image */}
-                <img 
-                  src={selectedVideo.imageUrl} 
-                  alt={selectedVideo.title} 
-                  className="w-full h-full object-cover opacity-60 group-hover:opacity-50 transition-opacity duration-500"
-                />
+                {selectedVideo.imageUrl ? (
+                  <img 
+                    src={selectedVideo.imageUrl} 
+                    alt={selectedVideo.title} 
+                    className="w-full h-full object-cover opacity-60 group-hover:opacity-50 transition-opacity duration-500"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#1a1715]/40 opacity-60 group-hover:opacity-50 transition-opacity duration-500"></div>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
                 
                 {/* Overlay Text (matching the Radical design) */}
@@ -110,8 +114,12 @@ export function VideoSection({ videos }: { videos: ContentItem[] }) {
               onClick={() => handleSelectVideo(video)}
               className="group cursor-pointer flex flex-col snap-start"
             >
-              <div className="w-full aspect-video rounded-xl overflow-hidden relative mb-4">
-                <img src={video.imageUrl} alt={video.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+              <div className="w-full aspect-video rounded-xl overflow-hidden relative mb-4 bg-black/5 dark:bg-white/5">
+                {video.imageUrl ? (
+                  <img src={video.imageUrl} alt={video.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-xs font-serif text-[#1a1715]/20 dark:text-white/20">No Cover</div>
+                )}
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
                 <div className="absolute bottom-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
                   <Play size={14} fill="currentColor" className="text-[#1a1715] ml-0.5" />

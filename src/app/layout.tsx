@@ -17,7 +17,7 @@ const sourceSans = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  title: "330+",
+  title: "3THIRTY⁺",
   description: "A comprehensive resource hub featuring videos, podcasts, articles, and book reviews to help you learn, grow, and connect with a broader community.",
 };
 

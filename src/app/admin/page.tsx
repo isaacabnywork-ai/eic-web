@@ -106,7 +106,7 @@ export default async function AdminDashboardPage({ searchParams }: Props) {
 
           <div className="bg-white p-6 rounded-xl border border-black/5 shadow-sm">
             <p className="text-sm text-black/60">
-              👋 Welcome to <strong className="text-[#1a1715]">330+ Admin</strong>. Use the sidebar to manage your content. <br/>
+              👋 Welcome to <strong className="text-[#1a1715]">3THIRTY⁺ Admin</strong>. Use the sidebar to manage your content. <br/>
               All changes save to Firestore instantly and appear on the <span className="text-[#b47539] font-medium">live site</span> in real-time — no refresh needed.
             </p>
           </div>

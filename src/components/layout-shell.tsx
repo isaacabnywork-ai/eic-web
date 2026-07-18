@@ -48,7 +48,7 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
             )}
           </div>
           
-          <Link href="/" className="font-serif text-2xl font-bold tracking-widest text-white pointer-events-auto">330+</Link>
+          <Link href="/" className="font-serif text-2xl font-bold tracking-widest text-white pointer-events-auto">3THIRTY⁺</Link>
           
           <div className="flex-1 flex justify-end">
             <button className="pointer-events-auto cursor-pointer p-2 -mr-2">

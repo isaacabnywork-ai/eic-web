@@ -27,7 +27,7 @@ function AdminSidebar({ logout, router }: { logout: () => void, router: any }) {
   return (
     <aside className="w-64 bg-[#1a1715] border-r border-black/10 flex flex-col hidden md:flex text-white h-full shadow-2xl z-20">
       <div className="p-6">
-        <h2 className="font-serif text-2xl text-white tracking-widest">330+</h2>
+        <h2 className="font-serif text-2xl text-white tracking-widest">3THIRTY⁺</h2>
       </div>
       
       <div className="flex-1 px-4 py-2 space-y-6 overflow-y-auto">

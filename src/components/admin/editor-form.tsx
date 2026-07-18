@@ -224,7 +224,7 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
               value={formData.organizer}
               onChange={handleChange}
               className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 shadow-sm"
-              placeholder="e.g., 330+ or Community Center"
+              placeholder="e.g., 3THIRTY⁺ or Community Center"
             />
           </div>
         </div>

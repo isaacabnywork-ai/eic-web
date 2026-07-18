@@ -80,7 +80,7 @@ export default async function Home() {
         
         {isEmpty && (
           <div className="text-center text-text-muted py-20">
-            <h3 className="text-xl font-serif text-text mb-4">Welcome to 330+!</h3>
+            <h3 className="text-xl font-serif text-text mb-4">Welcome to 3THIRTY⁺!</h3>
             <p className="mb-4">It looks like your Firebase database is empty.</p>
             <p>You can seed the dummy data by visiting <a href="/api/seed" target="_blank" className="text-accent hover:underline">/api/seed</a></p>
           </div>
