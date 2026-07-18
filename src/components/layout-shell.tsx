@@ -2,10 +2,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Headphones, BookOpen, Calendar, Book, Search, Moon, Sun, User, PlaySquare } from 'lucide-react';
+import { Home, Headphones, BookOpen, Calendar, Book, Search, Moon, Sun, User, PlaySquare, Menu } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useAuth } from '@/contexts/auth-context';
 import { MiniAudioPlayer } from './mini-audio-player';
+import { Sidebar } from './ui/sidebar';
 
 const navItems = [
   { label: 'Home', href: '/', icon: Home },
@@ -20,6 +21,7 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = React.useState(false);
   const { user, logout } = useAuth();
 
   React.useEffect(() => {
@@ -32,7 +34,13 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
       <main className="flex-1 overflow-y-auto pb-32 relative w-full">
         {/* Transparent Overlay Header */}
         <header className="fixed top-0 left-0 right-0 z-40 bg-gradient-to-b from-black/80 to-transparent pt-6 pb-12 px-6 flex items-center justify-between pointer-events-none">
-          <div className="flex-1 flex justify-start">
+          <div className="flex-1 flex justify-start items-center gap-4">
+            <button 
+              onClick={() => setIsSidebarOpen(true)}
+              className="pointer-events-auto w-10 h-10 rounded-full flex items-center justify-center bg-white/10 hover:bg-white/20 backdrop-blur-md transition-colors text-white"
+            >
+              <Menu size={20} />
+            </button>
             {user ? (
               <div className="flex items-center gap-3">
                 <Link href="/library" className="w-10 h-10 rounded-full bg-border flex items-center justify-center hover:bg-border/80 transition-colors pointer-events-auto">
@@ -43,7 +51,7 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
                 </button>
               </div>
             ) : (
-              <Link href="/login" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors pointer-events-auto">
+              <Link href="/login" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white/10 transition-colors pointer-events-auto hidden md:flex">
                 <User size={20} className="text-white" />
               </Link>
             )}
@@ -98,6 +106,8 @@ export function LayoutShell({ children }: { children: React.ReactNode }) {
           </button>
         </nav>
       </div>
+
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
     </div>
   );
 }
