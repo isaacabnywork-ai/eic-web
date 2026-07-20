@@ -26,7 +26,14 @@ export default async function EditorPage({ searchParams }: Props) {
       
       <div className="mb-8 pb-4 border-b border-black/5">
         <h1 className="font-sans font-black tracking-tighter uppercase text-3xl text-[#1a1715]">
-          {initialData ? "Edit Content" : "Create New Content"}
+          {initialData ? "Edit Content" : 
+            defaultType === 'blog_series' ? "Create New Blog Post" :
+            defaultType === 'event' ? "Create New Event" :
+            defaultType === 'book_review' ? "Create New Book Review" :
+            defaultType === 'podcast' ? "Create New Podcast" :
+            defaultType === 'sermon_podcast' ? "Create New Video" :
+            defaultType === 'banner' ? "Create New Banner" :
+            "Create New Content"}
         </h1>
         <p className="text-black/60 mt-2">
           {initialData ? "Update the details for this item below." : "Fill out the fields to publish a new piece of content."}

@@ -118,22 +118,24 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
           />
         </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-[#1a1715]">Type</label>
-          <select 
-            name="type"
-            value={formData.type}
-            onChange={handleChange}
-            className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] shadow-sm"
-          >
-            <option value="sermon_podcast">Video</option>
-            <option value="podcast">Podcast</option>
-            <option value="blog_series">Blog Series</option>
-            <option value="event">Event</option>
-            <option value="book_review">Book Review</option>
-            <option value="banner">Banner Slide</option>
-          </select>
-        </div>
+        {(!defaultType && !initialData?.type) && (
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-[#1a1715]">Type</label>
+            <select 
+              name="type"
+              value={formData.type}
+              onChange={handleChange}
+              className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] shadow-sm"
+            >
+              <option value="sermon_podcast">Video</option>
+              <option value="podcast">Podcast</option>
+              <option value="blog_series">Blog Series</option>
+              <option value="event">Event</option>
+              <option value="book_review">Book Review</option>
+              <option value="banner">Banner Slide</option>
+            </select>
+          </div>
+        )}
 
         <div className="space-y-2">
           <label className="text-sm font-semibold text-[#1a1715]">Author / Subtitle</label>
