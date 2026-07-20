@@ -291,7 +291,7 @@ export function FeaturedPodcastPlayer({ podcast, type = "PODCASTS" }: FeaturedPo
           </div>
 
           {podcast.videoUrl && (
-            <div className="mt-8 flex items-center gap-2 text-xs font-bold text-black/50 hover:text-black/80 transition-colors uppercase tracking-wider">
+            <div className="mt-8 flex items-center gap-2 text-xs font-bold text-black/50 dark:text-white/50 hover:text-black/80 dark:hover:text-white/80 transition-colors uppercase tracking-wider">
               <Link href={podcast.videoUrl} target="_blank" className="flex items-center gap-2">
                 <div className="w-6 h-4 bg-red-600 rounded flex items-center justify-center text-white">
                   <Play size={10} fill="currentColor" />
