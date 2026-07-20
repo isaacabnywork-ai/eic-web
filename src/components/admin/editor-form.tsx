@@ -234,31 +234,33 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-[#1a1715]">Audio URL (Optional)</label>
-          <input 
-            type="url"
-            name="audioUrl"
-            value={formData.audioUrl}
-            onChange={handleChange}
-            className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 shadow-sm"
-            placeholder="Direct link to .mp3 file"
-          />
-        </div>
+      {(formData.type === 'sermon_podcast' || formData.type === 'podcast') && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-[#1a1715]">Audio URL (Optional)</label>
+            <input 
+              type="url"
+              name="audioUrl"
+              value={formData.audioUrl}
+              onChange={handleChange}
+              className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 shadow-sm"
+              placeholder="Direct link to .mp3 file"
+            />
+          </div>
 
-        <div className="space-y-2">
-          <label className="text-sm font-semibold text-[#1a1715]">Video URL (Optional)</label>
-          <input 
-            type="url"
-            name="videoUrl"
-            value={formData.videoUrl}
-            onChange={handleChange}
-            className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 shadow-sm"
-            placeholder="YouTube or Vimeo link"
-          />
+          <div className="space-y-2">
+            <label className="text-sm font-semibold text-[#1a1715]">Video URL (Optional)</label>
+            <input 
+              type="url"
+              name="videoUrl"
+              value={formData.videoUrl}
+              onChange={handleChange}
+              className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 shadow-sm"
+              placeholder="YouTube or Vimeo link"
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="flex flex-wrap items-center gap-6 pt-4 border-t border-black/5">
         {formData.type !== 'banner' && (
