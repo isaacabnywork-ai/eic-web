@@ -14,8 +14,8 @@ export default async function Home() {
   let blogSeries = await getHomeContentByType('blog_series');
   if (blogSeries.length === 0) blogSeries = await getAllContent('blog_series');
 
-  let events = await getHomeContentByType('event');
-  if (events.length === 0) events = await getAllContent('event');
+  // For events, the user requested to see all of them on the home page
+  let events = await getAllContent('event');
 
   let booksReviews = await getHomeContentByType('book_review');
   if (booksReviews.length === 0) booksReviews = await getAllContent('book_review');

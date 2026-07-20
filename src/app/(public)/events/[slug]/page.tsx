@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
-import { getContentById, getContentBySlug, getAllContentItems } from "@/lib/db";
+import { getContentById, getContentBySlug, getAllContentItems, getAllContent } from "@/lib/db";
 import { Calendar, Wallet, Users } from "lucide-react";
+import { HorizontalRow } from "@/components/ui/horizontal-row";
 
 export default async function EventDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -22,6 +23,9 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
   if (!event || event.type !== 'event') {
     notFound();
   }
+
+  const allEvents = await getAllContent('event');
+  const otherEvents = allEvents.filter(e => e.id !== event?.id);
 
   const isExpired = true; // Hardcode for now, or calculate based on date string
 
@@ -144,6 +148,18 @@ export default async function EventDetailPage({ params }: { params: Promise<{ sl
 
         </div>
       </div>
+
+      {/* Explore More Events Row */}
+      {otherEvents.length > 0 && (
+        <div className="mt-16">
+          <HorizontalRow 
+            title="Explore More Events" 
+            items={otherEvents} 
+            aspectRatio="square"
+          />
+        </div>
+      )}
+
     </div>
   );
 }
