@@ -51,29 +51,29 @@ export default async function VideoPodcastPage({ params }: Props) {
             <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent" />
           </>
         )}
+      </div>
+
+      {/* Content Body Below Video */}
+      <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 pt-10 pb-4">
+        {item.isPremium && (
+          <span className="bg-accent text-white text-xs font-bold px-3 py-1 rounded-sm uppercase tracking-wider mb-4 inline-block">
+            Premium
+          </span>
+        )}
+        <h1 className="font-serif font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl text-text-main mb-4 leading-tight">
+          {item.title}
+        </h1>
+        <p className="text-lg text-text-muted mb-6">
+          by <span className="font-medium text-text-main">{item.author}</span>
+        </p>
         
-        <div className="absolute bottom-0 left-0 right-0 p-4 md:p-8 lg:p-12 max-w-[1200px] mx-auto">
-          {item.isPremium && (
-            <span className="bg-accent text-white text-xs font-bold px-3 py-1 rounded-sm uppercase tracking-wider mb-4 inline-block">
-              Premium
-            </span>
-          )}
-          <h1 className="font-serif font-bold tracking-tight text-4xl md:text-5xl lg:text-7xl text-text-main mb-4 leading-tight">
-            {item.title}
-          </h1>
-          <p className="text-lg md:text-xl text-white/80 mb-8">
-            by <span className="text-white font-medium">{item.author}</span>
-          </p>
-          
-          <div className="flex items-center gap-4">
-            <VideoPlayButton item={item} />
-            <SaveButton item={item} />
-          </div>
+        <div className="flex items-center gap-4 mb-8 border-b border-border-main pb-8">
+          <VideoPlayButton item={item} />
+          <SaveButton item={item} />
         </div>
       </div>
 
-      {/* Content Body */}
-      <div className="max-w-[800px] mx-auto px-4 md:px-8 py-12">
+      <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 pb-12">
         <h2 className="text-2xl font-serif text-text-main mb-4">About this Content</h2>
         <div className="prose prose-lg dark:prose-invert text-text-muted whitespace-pre-wrap">
           <p>
