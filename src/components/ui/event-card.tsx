@@ -34,11 +34,11 @@ export function EventCard({ item }: { item: ContentItem }) {
         </div>
 
         {/* Image */}
-        <div className="relative aspect-[16/10] overflow-hidden bg-black/5 dark:bg-white/5">
+        <div className="relative aspect-[16/10] overflow-hidden bg-black/5 dark:bg-white/5 flex items-center justify-center p-2">
           <img 
             src={item.imageUrl} 
             alt={item.title} 
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
           />
         </div>
 
