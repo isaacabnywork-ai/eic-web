@@ -128,12 +128,12 @@ export function FeaturedPodcastPlayer({ podcast, type = "PODCASTS" }: FeaturedPo
                 onProgress={handleProgress}
                 onDuration={handleDuration}
                 onEnded={() => setIsPlaying(false)}
-                width="0"
-                height="0"
-                style={{ display: 'none' }}
+                width="1px"
+                height="1px"
+                style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', zIndex: -10 }}
                 config={{
                   youtube: {
-                    playerVars: { autoplay: 0, controls: 0 }
+                    playerVars: { autoplay: 0, controls: 0, playsinline: 1 }
                   }
                 }}
               />
