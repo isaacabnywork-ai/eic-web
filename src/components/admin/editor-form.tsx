@@ -183,14 +183,16 @@ export function EditorForm({ initialData, defaultType }: { initialData: ContentI
       </div>
 
       <div className="space-y-2">
-        <label className="text-sm font-semibold text-[#1a1715]">Description (Optional)</label>
+        <label className="text-sm font-semibold text-[#1a1715]">
+          {formData.type === 'blog_series' || formData.type === 'book_review' ? 'Content (Markdown Supported)' : 'Description (Optional)'}
+        </label>
         <textarea 
           name="description"
-          rows={6}
+          rows={formData.type === 'blog_series' || formData.type === 'book_review' ? 15 : 6}
           value={formData.description}
           onChange={handleChange}
-          className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 resize-none shadow-sm"
-          placeholder="Brief summary or description of the content... (Line breaks will be preserved)"
+          className="w-full bg-white border border-black/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#b47539] focus:ring-1 focus:ring-[#b47539] text-[#1a1715] placeholder:text-black/30 shadow-sm"
+          placeholder={formData.type === 'blog_series' || formData.type === 'book_review' ? "Write your full article content here... (Line breaks will be preserved)" : "Brief summary or description of the content... (Line breaks will be preserved)"}
         />
       </div>
 
