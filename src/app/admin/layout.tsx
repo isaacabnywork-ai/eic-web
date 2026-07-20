@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, Suspense } from "react";
 import { useAuth } from "@/contexts/auth-context";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import { Settings, FileText, ArrowLeft, Loader2, LayoutDashboard, Headphones, BookOpen, Calendar, Book, LogOut, ExternalLink, Sliders, Image, PlaySquare } from "lucide-react";
 
@@ -22,6 +22,7 @@ const NavItem = ({ href, icon: Icon, label, isActive }: { href: string, icon: Re
 
 function AdminSidebar({ logout, router }: { logout: () => void, router: any }) {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const currentType = searchParams.get("type");
   
   return (
@@ -34,8 +35,8 @@ function AdminSidebar({ logout, router }: { logout: () => void, router: any }) {
         <div>
           <h3 className="text-[10px] font-bold text-white/30 tracking-widest uppercase mb-3 px-2">Content</h3>
           <nav className="space-y-1">
-            <NavItem href="/admin" icon={LayoutDashboard} label="Dashboard" isActive={typeof window !== 'undefined' && window.location.pathname === '/admin' && !currentType} />
-            <NavItem href="/admin/main-page" icon={Sliders} label="Main Page Content" isActive={typeof window !== 'undefined' && window.location.pathname.includes('/admin/main-page')} />
+            <NavItem href="/admin" icon={LayoutDashboard} label="Dashboard" isActive={pathname === '/admin' && !currentType} />
+            <NavItem href="/admin/main-page" icon={Sliders} label="Main Page Content" isActive={pathname.includes('/admin/main-page')} />
             <NavItem href="/admin?type=banner" icon={Image} label="Banners" isActive={currentType === 'banner'} />
             <NavItem href="/admin?type=sermon_podcast" icon={PlaySquare} label="Videos" isActive={currentType === 'sermon_podcast'} />
             <NavItem href="/admin?type=podcast" icon={Headphones} label="Podcasts" isActive={currentType === 'podcast'} />
