@@ -4,34 +4,37 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Play } from "lucide-react";
 
+import { HorizontalRow } from "@/components/ui/horizontal-row";
+
 export default async function PodcastSinglePage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
   
   // Try to find as a standard podcast first
   let podcast = await getContentBySlug('podcast', resolvedParams.id);
-  console.log("Looking up podcast:", resolvedParams.id);
-  console.log("Found as podcast:", podcast?.title);
   
   // If not found, it might be a sermon_podcast that is being displayed in the Podcasts tab
   if (!podcast) {
     podcast = await getContentBySlug('sermon_podcast', resolvedParams.id, 'podcasts');
-    console.log("Found as sermon_podcast in /podcasts:", podcast?.title);
   }
   
   if (!podcast) {
     // Let's just try to find ANY content that matches this slug at the end of its URL
     const allContent = await getAllContentItems();
     podcast = allContent.find(c => c.url?.endsWith(resolvedParams.id)) || null;
-    console.log("Found by fallback search:", podcast?.title, podcast?.url);
   }
   
   if (!podcast) {
     notFound();
   }
 
-  // Fetch all other podcasts
-  const allContent = await getAllContent('sermon_podcast');
-  const otherPodcasts = allContent.filter(item => item.audioUrl && item.id !== podcast.id);
+  // Fetch all other podcasts and videos that act as podcasts
+  const allPodcasts = await getAllContent('podcast');
+  const allSermonPodcasts = await getAllContent('sermon_podcast');
+  
+  // Combine all types that act as podcasts, and filter out the current one
+  const otherPodcasts = [...allPodcasts, ...allSermonPodcasts]
+    .filter(item => item.id !== podcast.id)
+    .slice(0, 8); // show up to 8 related episodes
 
   return (
     <div className="w-full bg-bg-main min-h-screen pt-20">
@@ -42,34 +45,11 @@ export default async function PodcastSinglePage({ params }: { params: Promise<{ 
       {/* List of other episodes */}
       {otherPodcasts.length > 0 && (
         <div className="px-4 md:px-8 py-16 w-full max-w-7xl mx-auto">
-          <h3 className="font-sans font-bold uppercase tracking-wider text-sm text-text-muted mb-8">
-            More Episodes
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {otherPodcasts.map((ep) => (
-              <Link 
-                href={`/podcasts/${ep.id}`}
-                key={ep.id}
-                className="flex items-start gap-4 p-4 rounded-xl cursor-pointer transition-all hover:bg-black/5 group"
-              >
-                <div className="w-16 h-16 shrink-0 rounded overflow-hidden relative">
-                  <img src={ep.imageUrl} alt={ep.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Play size={16} fill="currentColor" className="text-white ml-0.5" />
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-text-muted mb-1">
-                    {ep.author}
-                  </span>
-                  <h4 className="font-serif font-bold text-[#1a1715] text-sm leading-tight line-clamp-2 group-hover:text-accent transition-colors">
-                    {ep.title}
-                  </h4>
-                </div>
-              </Link>
-            ))}
-          </div>
+          <HorizontalRow 
+            title="More Episodes" 
+            items={otherPodcasts} 
+            aspectRatio="video"
+          />
         </div>
       )}
 

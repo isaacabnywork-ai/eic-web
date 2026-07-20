@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
-import { getContentBySlug } from "@/lib/db";
+import { getContentBySlug, getAllContent } from "@/lib/db";
 import { VideoPlayButton } from "@/components/ui/video-play-button";
 import { SaveButton } from "@/components/ui/save-button";
+import { HorizontalRow } from "@/components/ui/horizontal-row";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -14,6 +15,11 @@ export default async function VideoPodcastPage({ params }: Props) {
   if (!item) {
     notFound();
   }
+
+  const allVideos = await getAllContent('sermon_podcast');
+  const relatedItems = allVideos
+    .filter(v => v.id !== item.id)
+    .slice(0, 8);
 
   // Helper to convert standard youtube links to embed links
   const getEmbedUrl = (url: string) => {
@@ -75,11 +81,18 @@ export default async function VideoPodcastPage({ params }: Props) {
 
       <div className="w-full max-w-[1200px] mx-auto px-4 md:px-8 pb-12">
         <h2 className="text-2xl font-serif text-text-main mb-4">About this Content</h2>
-        <div className="prose prose-lg dark:prose-invert text-text-muted whitespace-pre-wrap">
+        <div className="prose prose-lg dark:prose-invert text-text-muted whitespace-pre-wrap mb-16">
           <p>
             {item.description || "No description available for this video or podcast."}
           </p>
         </div>
+        
+        {/* Related Videos */}
+        <HorizontalRow 
+          title="Related Videos" 
+          items={relatedItems} 
+          aspectRatio="video"
+        />
       </div>
     </div>
   );
