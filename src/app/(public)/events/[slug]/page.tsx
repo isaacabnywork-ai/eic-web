@@ -1,11 +1,23 @@
 import { notFound } from "next/navigation";
-import { getContentById } from "@/lib/db";
+import { getContentById, getContentBySlug, getAllContentItems } from "@/lib/db";
 import { Calendar, Wallet, Users } from "lucide-react";
 
 export default async function EventDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  // Use getContentById to guarantee we find the event regardless of its url property
-  const event = await getContentById(slug);
+  
+  // Try to find the event by slug
+  let event = await getContentBySlug('event', slug);
+  
+  // Fallback 1: Maybe the slug is actually the document ID
+  if (!event) {
+    event = await getContentById(slug);
+  }
+  
+  // Fallback 2: Search all items where URL ends with this slug
+  if (!event || event.type !== 'event') {
+    const allContent = await getAllContentItems();
+    event = allContent.find(c => c.type === 'event' && (c.url?.endsWith(slug) || c.id === slug)) || null;
+  }
   
   if (!event || event.type !== 'event') {
     notFound();
