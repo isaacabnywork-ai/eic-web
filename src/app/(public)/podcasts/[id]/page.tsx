@@ -1,13 +1,31 @@
-import { getContentById, getAllContent } from "@/lib/db";
+import { getContentById, getAllContent, getContentBySlug, getAllContentItems } from "@/lib/db";
 import { FeaturedPodcastPlayer } from "@/components/ui/featured-podcast-player";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Play } from "lucide-react";
 
-export default async function PodcastSinglePage({ params }: { params: { id: string } }) {
-  const podcast = await getContentById(params.id);
+export default async function PodcastSinglePage({ params }: { params: Promise<{ id: string }> }) {
+  const resolvedParams = await params;
   
-  if (!podcast || !podcast.audioUrl) {
+  // Try to find as a standard podcast first
+  let podcast = await getContentBySlug('podcast', resolvedParams.id);
+  console.log("Looking up podcast:", resolvedParams.id);
+  console.log("Found as podcast:", podcast?.title);
+  
+  // If not found, it might be a sermon_podcast that is being displayed in the Podcasts tab
+  if (!podcast) {
+    podcast = await getContentBySlug('sermon_podcast', resolvedParams.id, 'podcasts');
+    console.log("Found as sermon_podcast in /podcasts:", podcast?.title);
+  }
+  
+  if (!podcast) {
+    // Let's just try to find ANY content that matches this slug at the end of its URL
+    const allContent = await getAllContentItems();
+    podcast = allContent.find(c => c.url?.endsWith(resolvedParams.id)) || null;
+    console.log("Found by fallback search:", podcast?.title, podcast?.url);
+  }
+  
+  if (!podcast) {
     notFound();
   }
 

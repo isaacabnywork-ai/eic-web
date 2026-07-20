@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { ContentItem } from "@/components/ui/content-card";
-import { getYoutubeThumbnailUrl } from "@/lib/youtube";
+import { getYoutubeThumbnailUrl, getYoutubeEmbedUrl } from "@/lib/youtube";
 import { Play, Pause, RotateCcw, RotateCw, Download, ChevronDown, Headphones } from "lucide-react";
 import Link from "next/link";
 
@@ -106,9 +106,16 @@ export function FeaturedPodcastPlayer({ podcast, type = "PODCASTS" }: FeaturedPo
               Subscribe <ChevronDown size={14} />
             </button>
           </div>
-          <div className="w-72 md:w-96 aspect-video shrink-0 rounded-xl overflow-hidden shadow-2xl border border-black/5 bg-[#1a1715]/5 dark:bg-white/5 relative">
-            {(podcast.imageUrl || (podcast.videoUrl && getYoutubeThumbnailUrl(podcast.videoUrl))) ? (
-              <img src={podcast.imageUrl || (podcast.videoUrl ? getYoutubeThumbnailUrl(podcast.videoUrl) : "")!} alt={podcast.title} className="w-full h-full object-cover" />
+          <div className="w-72 md:w-96 aspect-video shrink-0 rounded-xl overflow-hidden shadow-2xl border border-black/5 bg-[#1a1715]/5 dark:bg-white/5 relative group">
+            {!podcast.audioUrl && podcast.videoUrl ? (
+              <iframe 
+                src={getYoutubeEmbedUrl(podcast.videoUrl)}
+                className="w-full h-full absolute inset-0 z-10"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            ) : (podcast.imageUrl || (podcast.videoUrl && getYoutubeThumbnailUrl(podcast.videoUrl))) ? (
+              <img src={podcast.imageUrl || (podcast.videoUrl ? getYoutubeThumbnailUrl(podcast.videoUrl) : "")!} alt={podcast.title} className="w-full h-full object-cover relative z-0" />
             ) : (
               <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-[#1a1715]/10 to-[#1a1715]/30 dark:from-white/10 dark:to-white/5 p-4 text-center">
                 <Headphones size={48} className="text-[#1a1715]/40 dark:text-white/40 mb-3 opacity-50" />
@@ -132,71 +139,83 @@ export function FeaturedPodcastPlayer({ podcast, type = "PODCASTS" }: FeaturedPo
 
           {/* Player UI */}
           <div className="w-full">
-            <audio 
-              ref={audioRef} 
-              src={podcast.audioUrl || undefined} 
-              onTimeUpdate={handleTimeUpdate}
-              onEnded={() => setIsPlaying(false)}
-            />
-            
-            {/* Progress Bar */}
-            <div 
-              className="w-full h-1.5 bg-black/10 dark:bg-white/10 rounded-full cursor-pointer relative mb-3 group"
-              ref={progressBarRef}
-              onClick={handleProgressClick}
-            >
-              <div 
-                className="absolute top-0 left-0 h-full bg-[#1a1715] dark:bg-white rounded-full"
-                style={{ width: `${progress}%` }}
-              >
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-[#1a1715] dark:bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-1/2 shadow-sm" />
-              </div>
-            </div>
-
-            {/* Time Indicators */}
-            <div className="flex justify-between text-[11px] font-mono text-black/50 dark:text-white/50 mb-6">
-              <span>{formatTime(currentTime)}</span>
-              <span>{formatTime(duration)}</span>
-            </div>
-
-            {/* Controls */}
-            <div className="flex items-center justify-between">
-              <div className="w-16"></div> {/* Spacer for centering */}
-              
-              <div className="flex items-center gap-6 md:gap-8">
-                <button onClick={() => skip(-15)} className="text-[#1a1715] dark:text-white hover:opacity-70 transition-opacity relative">
-                  <RotateCcw size={22} strokeWidth={1.5} />
-                  <span className="absolute top-[10px] left-[5px] text-[8px] font-bold">15</span>
-                </button>
+            {podcast.audioUrl ? (
+              <>
+                <audio 
+                  ref={audioRef} 
+                  src={podcast.audioUrl} 
+                  onTimeUpdate={handleTimeUpdate}
+                  onEnded={() => setIsPlaying(false)}
+                />
                 
-                <button 
-                  onClick={togglePlay} 
-                  className="w-16 h-16 rounded-full border border-[#1a1715]/20 dark:border-white/20 flex items-center justify-center text-[#1a1715] dark:text-white hover:bg-[#1a1715] dark:hover:bg-white hover:text-white dark:hover:text-[#1a1715] transition-all transform hover:scale-105 active:scale-95"
+                {/* Progress Bar */}
+                <div 
+                  className="w-full h-1.5 bg-black/10 dark:bg-white/10 rounded-full cursor-pointer relative mb-3 group"
+                  ref={progressBarRef}
+                  onClick={handleProgressClick}
                 >
-                  {isPlaying ? (
-                    <Pause fill="currentColor" size={24} />
-                  ) : (
-                    <Play fill="currentColor" size={24} className="ml-1" />
-                  )}
-                </button>
-                
-                <button onClick={() => skip(15)} className="text-[#1a1715] dark:text-white hover:opacity-70 transition-opacity relative">
-                  <RotateCw size={22} strokeWidth={1.5} />
-                  <span className="absolute top-[10px] left-[4px] text-[8px] font-bold">30</span>
-                </button>
-              </div>
+                  <div 
+                    className="absolute top-0 left-0 h-full bg-[#1a1715] dark:bg-white rounded-full"
+                    style={{ width: `${progress}%` }}
+                  >
+                    <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-[#1a1715] dark:bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-1/2 shadow-sm" />
+                  </div>
+                </div>
 
-              <div className="flex items-center gap-4 text-black/50 dark:text-white/50 w-16 justify-end">
-                <button onClick={toggleSpeed} className="w-7 h-7 rounded-full border border-black/20 dark:border-white/20 flex items-center justify-center text-[9px] font-bold text-[#1a1715] dark:text-white hover:border-black/40 dark:hover:border-white/40">
-                  {speed}x
-                </button>
-                {podcast.videoUrl && (
-                  <Link href={podcast.videoUrl} target="_blank" className="hover:text-[#1a1715] dark:hover:text-white transition-colors">
-                    <Download size={16} strokeWidth={2} />
-                  </Link>
-                )}
+                {/* Time Indicators */}
+                <div className="flex justify-between text-[11px] font-mono text-black/50 dark:text-white/50 mb-6">
+                  <span>{formatTime(currentTime)}</span>
+                  <span>{formatTime(duration)}</span>
+                </div>
+
+                {/* Controls */}
+                <div className="flex items-center justify-between">
+                  <div className="w-16"></div> {/* Spacer for centering */}
+                  
+                  <div className="flex items-center gap-6 md:gap-8">
+                    <button onClick={() => skip(-15)} className="text-[#1a1715] dark:text-white hover:opacity-70 transition-opacity relative">
+                      <RotateCcw size={22} strokeWidth={1.5} />
+                      <span className="absolute top-[10px] left-[5px] text-[8px] font-bold">15</span>
+                    </button>
+                    
+                    <button 
+                      onClick={togglePlay} 
+                      className="w-16 h-16 rounded-full border border-[#1a1715]/20 dark:border-white/20 flex items-center justify-center text-[#1a1715] dark:text-white hover:bg-[#1a1715] dark:hover:bg-white hover:text-white dark:hover:text-[#1a1715] transition-all transform hover:scale-105 active:scale-95"
+                    >
+                      {isPlaying ? (
+                        <Pause fill="currentColor" size={24} />
+                      ) : (
+                        <Play fill="currentColor" size={24} className="ml-1" />
+                      )}
+                    </button>
+                    
+                    <button onClick={() => skip(15)} className="text-[#1a1715] dark:text-white hover:opacity-70 transition-opacity relative">
+                      <RotateCw size={22} strokeWidth={1.5} />
+                      <span className="absolute top-[10px] left-[4px] text-[8px] font-bold">30</span>
+                    </button>
+                  </div>
+
+                  <div className="flex items-center gap-4 text-black/50 dark:text-white/50 w-16 justify-end">
+                    <button onClick={toggleSpeed} className="w-7 h-7 rounded-full border border-black/20 dark:border-white/20 flex items-center justify-center text-[9px] font-bold text-[#1a1715] dark:text-white hover:border-black/40 dark:hover:border-white/40">
+                      {speed}x
+                    </button>
+                    {podcast.videoUrl && (
+                      <Link href={podcast.videoUrl} target="_blank" className="hover:text-[#1a1715] dark:hover:text-white transition-colors">
+                        <Download size={16} strokeWidth={2} />
+                      </Link>
+                    )}
+                  </div>
+                </div>
+              </>
+            ) : podcast.videoUrl ? (
+              <div className="flex flex-col items-center justify-center p-6 border border-black/10 dark:border-white/10 rounded-xl bg-black/5 dark:bg-white/5 mt-2">
+                <Play size={28} className="text-black/30 dark:text-white/30 mb-3" />
+                <p className="text-sm font-medium text-black/60 dark:text-white/60 text-center leading-relaxed">
+                  This episode is available in video format.<br/>
+                  Play the video to listen.
+                </p>
               </div>
-            </div>
+            ) : null}
           </div>
 
           {podcast.videoUrl && (
