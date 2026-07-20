@@ -27,12 +27,11 @@ export default async function PodcastSinglePage({ params }: { params: Promise<{ 
     notFound();
   }
 
-  // Fetch all other podcasts and videos that act as podcasts
+  // Fetch all other podcasts
   const allPodcasts = await getAllContent('podcast');
-  const allSermonPodcasts = await getAllContent('sermon_podcast');
   
-  // Combine all types that act as podcasts, and filter out the current one
-  const otherPodcasts = [...allPodcasts, ...allSermonPodcasts]
+  // Filter out the current one
+  const otherPodcasts = allPodcasts
     .filter(item => item.id !== podcast.id)
     .slice(0, 8); // show up to 8 related episodes
 
