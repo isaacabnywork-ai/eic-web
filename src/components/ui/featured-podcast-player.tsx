@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { ContentItem } from "@/components/ui/content-card";
 import { getYoutubeThumbnailUrl, getYoutubeEmbedUrl } from "@/lib/youtube";
 import { Play, Pause, RotateCcw, RotateCw, Download, ChevronDown, Headphones } from "lucide-react";
-import ReactPlayer from "react-player";
 import Link from "next/link";
 
 interface FeaturedPodcastPlayerProps {
@@ -18,44 +17,132 @@ export function FeaturedPodcastPlayer({ podcast, type = "PODCASTS" }: FeaturedPo
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [speed, setSpeed] = useState(1);
-  const [mounted, setMounted] = useState(false);
-  const playerRef = useRef<ReactPlayer>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const iframeRef = useRef<HTMLIFrameElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
 
+  // Update progress bar when time changes
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    if (duration > 0) {
+      setProgress((currentTime / duration) * 100);
+    }
+  }, [currentTime, duration]);
+
+  // YouTube Message Listener for Progress & State
+  useEffect(() => {
+    if (podcast.audioUrl) return; // Only needed for YouTube
+
+    const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== "https://www.youtube.com") return;
+      try {
+        const data = JSON.parse(event.data);
+        if (data.event === 'infoDelivery' && data.info) {
+          if (data.info.currentTime !== undefined) {
+            setCurrentTime(data.info.currentTime);
+          }
+          if (data.info.duration !== undefined) {
+            setDuration(data.info.duration);
+          }
+          if (data.info.playerState !== undefined) {
+            if (data.info.playerState === 1) setIsPlaying(true);   // Playing
+            if (data.info.playerState === 2) setIsPlaying(false);  // Paused
+            if (data.info.playerState === 0) setIsPlaying(false);  // Ended
+          }
+        }
+      } catch (e) {
+        // Ignore JSON parse errors from other messages
+      }
+    };
+    
+    window.addEventListener('message', handleMessage);
+    
+    // Fallback polling for YouTube just in case infoDelivery is slow
+    let interval: NodeJS.Timeout;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        if (iframeRef.current && iframeRef.current.contentWindow) {
+          iframeRef.current.contentWindow.postMessage(JSON.stringify({ event: 'listening' }), '*'); // Ping to wake up infoDelivery
+        }
+      }, 1000);
+    }
+    
+    return () => {
+      window.removeEventListener('message', handleMessage);
+      clearInterval(interval);
+    };
+  }, [podcast.audioUrl, isPlaying]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.playbackRate = speed;
+    }
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      iframeRef.current.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'setPlaybackRate', args: [speed] }), '*');
+    }
+  }, [speed]);
 
   const togglePlay = () => {
-    setIsPlaying(!isPlaying);
+    const nextPlayingState = !isPlaying;
+    
+    // Audio Player
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(error => {
+            console.error("Playback prevented:", error);
+            setIsPlaying(false);
+          });
+        }
+      }
+    } 
+    // YouTube Player
+    else if (iframeRef.current && iframeRef.current.contentWindow) {
+      if (isPlaying) {
+        iframeRef.current.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*');
+      } else {
+        iframeRef.current.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'playVideo', args: [] }), '*');
+      }
+    }
+    
+    setIsPlaying(nextPlayingState);
   };
 
-  const handleProgress = (state: { playedSeconds: number, played: number, loadedSeconds: number, loaded: number }) => {
-    setCurrentTime(state.playedSeconds);
-    setProgress(state.played * 100);
-  };
-
-  const handleDuration = (duration: number) => {
-    setDuration(duration);
+  const handleTimeUpdate = () => {
+    if (audioRef.current) {
+      const current = audioRef.current.currentTime;
+      const total = audioRef.current.duration || 1; // avoid NaN
+      setCurrentTime(current);
+      setDuration(total);
+    }
   };
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (progressBarRef.current && playerRef.current) {
+    if (progressBarRef.current) {
       const rect = progressBarRef.current.getBoundingClientRect();
       const pos = (e.clientX - rect.left) / rect.width;
       const newTime = pos * duration;
-      playerRef.current.seekTo(pos, 'fraction');
+      
+      if (audioRef.current) {
+        audioRef.current.currentTime = newTime;
+      } else if (iframeRef.current && iframeRef.current.contentWindow) {
+        iframeRef.current.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [newTime, true] }), '*');
+      }
+      
       setCurrentTime(newTime);
-      setProgress(pos * 100);
     }
   };
 
   const skip = (amount: number) => {
-    if (playerRef.current) {
-      const newTime = currentTime + amount;
-      playerRef.current.seekTo(newTime, 'seconds');
-      setCurrentTime(newTime);
+    const newTime = Math.max(0, Math.min(currentTime + amount, duration || 0));
+    if (audioRef.current) {
+      audioRef.current.currentTime = newTime;
+    } else if (iframeRef.current && iframeRef.current.contentWindow) {
+      iframeRef.current.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'seekTo', args: [newTime, true] }), '*');
     }
+    setCurrentTime(newTime);
   };
 
   const toggleSpeed = () => {
@@ -67,15 +154,17 @@ export function FeaturedPodcastPlayer({ podcast, type = "PODCASTS" }: FeaturedPo
   };
 
   const formatTime = (time: number) => {
-    if (isNaN(time)) return "00:00";
+    if (isNaN(time) || time === 0) return "00:00";
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  const youtubeId = podcast.videoUrl ? (podcast.videoUrl.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^"&?\/\s]{11})/) || [])[1] : null;
+
   return (
     <div className="w-full bg-[#e8e9e6] dark:bg-[#1f1b19] relative overflow-hidden py-16 px-6 md:px-12 border-y border-black/10 dark:border-white/10 transition-colors duration-300">
-      {/* Decorative textured background overlay could go here */}
+      {/* Decorative textured background overlay */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cream-paper.png")' }}></div>
 
       <div className="w-full max-w-7xl mx-auto relative z-10 grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-12 lg:gap-24 items-center">
@@ -119,23 +208,25 @@ export function FeaturedPodcastPlayer({ podcast, type = "PODCASTS" }: FeaturedPo
 
           {/* Player UI */}
           <div className="w-full">
-            {mounted && (
-              <ReactPlayer 
-                ref={playerRef}
-                url={podcast.audioUrl || podcast.videoUrl || undefined}
-                playing={isPlaying}
-                playbackRate={speed}
-                onProgress={handleProgress}
-                onDuration={handleDuration}
+            {/* Native Audio (if available) */}
+            {podcast.audioUrl && (
+              <audio 
+                ref={audioRef} 
+                src={podcast.audioUrl} 
+                onTimeUpdate={handleTimeUpdate}
                 onEnded={() => setIsPlaying(false)}
+              />
+            )}
+            
+            {/* Hidden YouTube Iframe (if no audio, use video) */}
+            {!podcast.audioUrl && podcast.videoUrl && youtubeId && (
+              <iframe
+                ref={iframeRef}
+                src={`https://www.youtube.com/embed/${youtubeId}?enablejsapi=1&autoplay=0&controls=0&playsinline=1`}
                 width="1px"
                 height="1px"
                 style={{ position: 'absolute', opacity: 0, pointerEvents: 'none', zIndex: -10 }}
-                config={{
-                  youtube: {
-                    playerVars: { autoplay: 0, controls: 0, playsinline: 1 }
-                  }
-                }}
+                allow="autoplay"
               />
             )}
             
@@ -146,7 +237,7 @@ export function FeaturedPodcastPlayer({ podcast, type = "PODCASTS" }: FeaturedPo
               onClick={handleProgressClick}
             >
               <div 
-                className="absolute top-0 left-0 h-full bg-[#1a1715] dark:bg-white rounded-full"
+                className="absolute top-0 left-0 h-full bg-[#1a1715] dark:bg-white rounded-full transition-all duration-100 ease-linear"
                 style={{ width: `${progress}%` }}
               >
                 <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-[#1a1715] dark:bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-1/2 shadow-sm" />
